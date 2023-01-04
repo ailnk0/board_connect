@@ -3,8 +3,9 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Welcome to Firebase Hosting</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
 
   <!-- update the version number as needed -->
   <script defer src="/__/firebase/9.15.0/firebase-app-compat.js"></script>
@@ -100,6 +101,13 @@
 </head>
 
 <body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+
   <div id="message">
     <h2>Welcome</h2>
     <h1>Firebase Hosting Setup Complete</h1>
