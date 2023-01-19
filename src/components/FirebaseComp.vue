@@ -7,8 +7,8 @@
             extraordinary!</p>
         <p>
         <ul>
-            <li v-for="(value, key) in firebase" :key="value">
-                Firebase <a>{{ key.toUpperCase() }}</a> Loading {{ getResult(value) }}.
+            <li class="m-1" v-for="(value, key) in firebase" :key="value">
+                Firebase <a target="_blank" href="#">{{ key.toUpperCase() }}</a> Loading {{ getResult(value) }}.
             </li>
         </ul>
         </p>
@@ -79,6 +79,7 @@ export default {
     text-transform: uppercase;
     text-decoration: none;
     padding: 16px;
+    font-size: 16px;
     border-radius: 4px;
     border: 1px solid var(--color-border);
 }

@@ -6,6 +6,9 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 import App from './App.vue'
 import router from './router'
 
