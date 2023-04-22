@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-5">
+  <div class="card mb-3">
     <img src="https://picsum.photos/1000/500" class="card-img-top" alt="..." />
     <div class="card-body">
       <div class="d-flex justify-content-between mb-2">

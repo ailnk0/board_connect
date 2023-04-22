@@ -1,24 +1,29 @@
 <template>
-  <nav class="navbar bg-body-tertiary fixed-top">
+  <nav class="navbar bg-body-tertiary sticky-top">
     <div class="container">
-      <button
-        class="btn border-0"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar"
-        aria-label="Toggle navigation"
-      >
-        <i class="bi bi-list fs-4"></i>
-      </button>
       <a class="navbar-brand" href="#">
-        <i class="bi bi-dice-2 fs-3"></i>
+        <i class="bi bi-dice-2-fill"></i>
       </a>
-      <a class="navbar-brand" href="#">
-        <i class="bi bi-heart"></i>
-      </a>
+      <div>
+        <button class="btn border-0" type="button">
+          <i class="bi bi-search"></i>
+        </button>
+        <button class="btn border-0" type="button">
+          <i class="bi bi-heart"></i>
+        </button>
+        <button
+          class="btn border-0"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar"
+          aria-label="Toggle navigation"
+        >
+          <i class="bi bi-list fs-4"></i>
+        </button>
+      </div>
       <div
-        class="offcanvas offcanvas-start"
+        class="offcanvas offcanvas-end"
         tabindex="-1"
         id="offcanvasNavbar"
         aria-labelledby="offcanvasNavbarLabel"
@@ -33,7 +38,7 @@
           ></button>
         </div>
         <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">
                 <i class="bi bi-house"></i> 홈

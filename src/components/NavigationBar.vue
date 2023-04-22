@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar bg-body-tertiary fixed-bottom">
+  <nav class="navbar bg-body-tertiary sticky-bottom">
     <div class="container">
       <a class="navbar-brand" href="#">
         <i class="bi bi-house"></i>
