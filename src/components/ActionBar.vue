@@ -1,18 +1,20 @@
 <template>
   <nav class="navbar bg-body-tertiary sticky-top">
     <div class="container">
-      <a class="navbar-brand" href="#">
-        <i class="bi bi-dice-2-fill"></i>
-      </a>
       <div>
-        <button class="btn border-0" type="button">
+        <button class="btn border-0 navbar-brand" type="button">
+          <i class="bi bi-dice-2-fill"></i>
+        </button>
+      </div>
+      <div>
+        <button class="btn border-0 navbar-brand" type="button">
           <i class="bi bi-search"></i>
         </button>
-        <button class="btn border-0" type="button">
+        <button class="btn border-0 navbar-brand" type="button">
           <i class="bi bi-heart"></i>
         </button>
         <button
-          class="btn border-0"
+          class="btn border-0 navbar-brand"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasNavbar"
@@ -45,16 +47,16 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"> <i class="bi bi-search"></i> 검색 </a>
+              <a class="nav-link" href="#"> <i class="bi bi-search"></i> 검색</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"> <i class="bi bi-star"></i> 알림 </a>
+              <a class="nav-link" href="#"> <i class="bi bi-star"></i> 알림</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"> <i class="bi bi-heart"></i> 글 작성 </a>
+              <a class="nav-link" href="#"> <i class="bi bi-heart"></i> 글 작성</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"> <i class="bi bi-person-circle"></i> 프로필 </a>
+              <a class="nav-link" href="#"> <i class="bi bi-person-circle"></i> 프로필</a>
             </li>
             <li class="nav-item dropdown">
               <a

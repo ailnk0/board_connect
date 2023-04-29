@@ -1,14 +1,12 @@
 <template>
   <body>
-    <div class="container">
-      <ActionBar />
-      <div class="container mt-3">
-        <TheCard />
-        <TheCard />
-        <TheCard />
-        <TheCard />
-        <TheCard />
-      </div>
+    <ActionBar />
+    <div class="container mt-3">
+      <TheCard />
+      <TheCard />
+      <TheCard />
+      <TheCard />
+      <TheCard />
     </div>
   </body>
 </template>
