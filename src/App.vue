@@ -2,18 +2,14 @@
   <body>
     <ActionBar />
     <div class="container mt-3">
-      <TheCard />
-      <TheCard />
-      <TheCard />
-      <TheCard />
-      <TheCard />
+      <RouterView />
     </div>
   </body>
 </template>
 
 <script setup lang="ts">
+import { RouterView } from 'vue-router'
 import ActionBar from './components/ActionBar.vue'
-import TheCard from './components/TheCard.vue'
 </script>
 
 <style scoped></style>
