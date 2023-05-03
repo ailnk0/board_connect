@@ -3,7 +3,9 @@
     <div class="container">
       <div>
         <button class="btn border-0 navbar-brand" type="button" @click="$router.push('/')">
-          <i class="bi bi-dice-2-fill"></i>
+          <span class="fs-2">
+            <font-awesome-icon icon="fa-solid fa-dice" />
+          </span>
         </button>
       </div>
       <div>
