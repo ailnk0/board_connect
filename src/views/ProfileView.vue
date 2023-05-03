@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col">
         <div class="card">
           <div class="card-body">
             <img
@@ -9,8 +9,11 @@
               class="rounded-circle mx-auto d-block mb-3"
               alt="User photo"
             />
-            <h4 class="text-center">John Doe</h4>
-            <p class="text-center">johndoe@example.com</p>
+            <h4 class="text-center">{{ auth?.currentUser?.displayName }}</h4>
+            <p class="text-center">{{ auth?.currentUser?.email }}</p>
+            <p v-if="!auth?.currentUser?.emailVerified" class="text-center">
+              Required to email verification
+            </p>
             <hr />
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -33,6 +36,15 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getAuth } from 'firebase/auth'
+import { onMounted, ref } from 'vue'
+
+const auth = ref()
+
+onMounted(() => {
+  auth.value = getAuth()
+})
+</script>
 
 <style scoped></style>

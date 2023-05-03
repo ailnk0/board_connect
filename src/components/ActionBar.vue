@@ -42,10 +42,18 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/">
+              <div>
+                <span class="fw-bold">{{ auth?.currentUser?.displayName }}</span>
+              </div>
+              <div>
+                <span>{{ auth?.currentUser?.email }}</span>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">
                 <i class="bi bi-house"></i>
                 <span> 홈</span>
-              </RouterLink>
+              </a>
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/search">
@@ -107,12 +115,18 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { getAuth, signOut } from 'firebase/auth'
 
+const auth = ref()
+
+onMounted(() => {
+  auth.value = getAuth()
+})
+
 function logout() {
-  const auth = getAuth()
-  signOut(auth)
+  signOut(auth.value)
     .then(() => {
       // Sign-out successful.
       console.log('sign-out')

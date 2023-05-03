@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import {
   EmailAuthProvider,
   getAuth,
@@ -14,12 +14,25 @@ import {
   TwitterAuthProvider
 } from 'firebase/auth'
 import * as firebaseui from 'firebaseui'
+//import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/authStore'
+
+const auth = ref()
+
+const store = useAuthStore()
+const { init } = store
+//const { uid } = storeToRefs(store)
 
 onMounted(() => {
+  auth.value = getAuth()
   initAuthUI()
 })
 
 function initAuthUI() {
+  if (auth.value.currentUser != null) {
+    return
+  }
+
   let uiConfig = {
     signInSuccessUrl: '/',
     signInOptions: [
@@ -29,8 +42,8 @@ function initAuthUI() {
       TwitterAuthProvider.PROVIDER_ID
     ],
     callbacks: {
-      signInSuccessWithAuthResult: function (authResult: any, redirectUrl: any) {
-        onSignInSuccess(authResult, redirectUrl)
+      signInSuccessWithAuthResult: function (_authResult: any) {
+        onSignInSuccess(_authResult)
         return true
       },
       uiShown: function () {
@@ -43,11 +56,11 @@ function initAuthUI() {
   ui.start('#firebaseui-auth-container', uiConfig)
 }
 
-function onSignInSuccess(authResult: any, redirectUrl: any): void {
+function onSignInSuccess(_authResult: any): void {
   // User successfully signed in.
   // Return type determines whether we continue the redirect automatically
   // or whether we leave that to developer to handle.
-  console.log(authResult, redirectUrl)
+  init(_authResult.user.uid)
 }
 </script>
 
