@@ -92,10 +92,10 @@
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <RouterLink class="dropdown-item" to="/log-in">
+                  <a class="dropdown-item" @click="logout">
                     <i class="bi bi-box-arrow-right"></i>
                     <span> 로그아웃</span>
-                  </RouterLink>
+                  </a>
                 </li>
               </ul>
             </li>
@@ -108,6 +108,20 @@
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { getAuth, signOut } from 'firebase/auth'
+
+function logout() {
+  const auth = getAuth()
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+      console.log('sign-out')
+    })
+    .catch((error) => {
+      // An error happened.
+      console.log(error)
+    })
+}
 </script>
 
 <style scoped></style>

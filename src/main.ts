@@ -9,10 +9,6 @@ import App from './App.vue'
 import router from './router'
 
 import { initializeApp } from 'firebase/app'
-import { getAnalytics } from 'firebase/analytics'
-import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage'
 
 import './assets/main.css'
 
@@ -33,12 +29,6 @@ const firebaseConfig = {
 }
 
 export const firebaseApp = initializeApp(firebaseConfig)
-export const firebase = {
-  analytics: getAnalytics(firebaseApp),
-  auth: getAuth(firebaseApp),
-  db: getFirestore(firebaseApp),
-  storage: getStorage(firebaseApp)
-}
 
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)

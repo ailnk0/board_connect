@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import { firebase } from '../main'
+import { firebaseApp } from '../main'
+import { getAnalytics } from 'firebase/analytics'
+import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
+import { getStorage } from 'firebase/storage'
+
+const firebaseFeatures = {
+  firebaseApp: firebaseApp,
+  analytics: getAnalytics(firebaseApp),
+  auth: getAuth(firebaseApp),
+  db: getFirestore(firebaseApp),
+  storage: getStorage(firebaseApp)
+}
 </script>
 
 <template>
@@ -11,7 +23,7 @@ import { firebase } from '../main'
       build something extraordinary!
     </p>
     <ul>
-      <li v-for="(v, k) in firebase" :key="k">
+      <li v-for="(v, k) in firebaseFeatures" :key="k">
         Firebase <a>{{ k.toUpperCase() }}</a> Loading {{ v != null ? 'Successed' : 'Failed' }}.
       </li>
     </ul>

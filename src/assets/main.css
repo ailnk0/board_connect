@@ -1,4 +1,5 @@
 @import './base.css';
+@import url('https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css');
 
 body {
   max-width: 576px;

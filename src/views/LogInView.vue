@@ -1,36 +1,54 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card mt-5">
-          <div class="card-header">
-            <h3 class="text-center">Log In</h3>
-          </div>
-          <div class="card-body">
-            <form>
-              <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" class="form-control" required />
-              </div>
-              <div class="form-group">
-                <label for="password">Password:</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  class="form-control"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">Log In</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="firebaseui-auth-container"></div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import {
+  EmailAuthProvider,
+  getAuth,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  TwitterAuthProvider
+} from 'firebase/auth'
+import * as firebaseui from 'firebaseui'
+
+onMounted(() => {
+  initAuthUI()
+})
+
+function initAuthUI() {
+  let uiConfig = {
+    signInSuccessUrl: '/',
+    signInOptions: [
+      EmailAuthProvider.PROVIDER_ID,
+      GoogleAuthProvider.PROVIDER_ID,
+      FacebookAuthProvider.PROVIDER_ID,
+      TwitterAuthProvider.PROVIDER_ID
+    ],
+    callbacks: {
+      signInSuccessWithAuthResult: function (authResult: any, redirectUrl: any) {
+        onSignInSuccess(authResult, redirectUrl)
+        return true
+      },
+      uiShown: function () {
+        // The widget is rendered.
+        // Hide the loader.
+      }
+    }
+  }
+  let ui = new firebaseui.auth.AuthUI(getAuth())
+  ui.start('#firebaseui-auth-container', uiConfig)
+}
+
+function onSignInSuccess(authResult: any, redirectUrl: any): void {
+  // User successfully signed in.
+  // Return type determines whether we continue the redirect automatically
+  // or whether we leave that to developer to handle.
+  console.log(authResult, redirectUrl)
+}
+</script>
 
 <style scoped></style>
