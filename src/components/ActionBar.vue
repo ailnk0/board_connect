@@ -58,28 +58,28 @@
               </a>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/search">
+              <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/search')">
                 <i class="bi bi-search"></i>
                 <span> 검색</span>
-              </RouterLink>
+              </a>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/heart">
+              <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/heart')">
                 <i class="bi bi-heart"></i>
                 <span> 알림</span>
-              </RouterLink>
+              </a>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/write-post">
+              <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/write-post')">
                 <i class="bi bi-pencil"></i>
                 <span> 글 작성</span>
-              </RouterLink>
+              </a>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/profile">
+              <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/profile')">
                 <i class="bi bi-person-circle"></i>
                 <span> 프로필</span>
-              </RouterLink>
+              </a>
             </li>
             <li class="nav-item dropdown">
               <a
@@ -93,10 +93,14 @@
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <RouterLink class="dropdown-item" to="/log-in">
+                  <a
+                    class="dropdown-item"
+                    data-bs-dismiss="offcanvas"
+                    @click="router.push('/log-in')"
+                  >
                     <i class="bi bi-gear"></i>
                     <span> 설정</span>
-                  </RouterLink>
+                  </a>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
@@ -118,7 +122,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { RouterLink } from 'vue-router'
+//import { RouterLink } from 'vue-router'
+import router from '@/router'
 import { getAuth, signOut } from 'firebase/auth'
 
 const auth = ref()
@@ -135,7 +140,7 @@ onMounted(() => {
 })
 
 function logout() {
-  signOut(auth.value)
+  signOut(getAuth())
     .then(() => {
       // Sign-out successful.
       console.log('sign-out')

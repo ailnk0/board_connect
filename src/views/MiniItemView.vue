@@ -9,7 +9,7 @@
         <font-awesome-icon :icon="['fas', 'list']" />
       </div>
     </div>
-    <div class="row row-cols-3">
+    <div class="row row-cols-3 g-3">
       <div class="col">
         <MiniItemVue />
       </div>

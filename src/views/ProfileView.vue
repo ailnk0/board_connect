@@ -5,8 +5,8 @@
       <div><span class="fs-1 fw-bold">프로필</span></div>
       <div><span class="fs-5">설정</span></div>
     </div>
-    <div class="m-5">
-      <div class="m-4">
+    <div class="my-5">
+      <div class="my-4">
         <img
           src="https://picsum.photos/250"
           class="rounded-circle mx-auto d-block mb-3"
