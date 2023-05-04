@@ -7,7 +7,11 @@
     </div>
     <div class="my-5">
       <div class="my-4">
-        <img src="https://picsum.photos/250" class="rounded-circle mx-auto d-block mb-3" alt="User photo" />
+        <img
+          src="https://picsum.photos/250"
+          class="rounded-circle mx-auto d-block mb-3"
+          alt="User photo"
+        />
       </div>
       <div>
         <div class="text-center">
@@ -57,7 +61,7 @@ onMounted(() => {
   auth.value = getAuth().onAuthStateChanged(function (user) {
     console.log(user)
     if (user) {
-      displayName.value = user.displayName;
+      displayName.value = user.displayName
       // Do Something
     } else {
       goToLogin()
