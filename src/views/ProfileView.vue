@@ -7,15 +7,11 @@
     </div>
     <div class="my-5">
       <div class="my-4">
-        <img
-          src="https://picsum.photos/250"
-          class="rounded-circle mx-auto d-block mb-3"
-          alt="User photo"
-        />
+        <img src="https://picsum.photos/250" class="rounded-circle mx-auto d-block mb-3" alt="User photo" />
       </div>
       <div>
         <div class="text-center">
-          <span class="fs-1 fw-bold">{{ auth?.currentUser?.displayName }}</span>
+          <span class="fs-1 fw-bold">{{ displayName }}</span>
         </div>
         <div class="text-center"></div>
         <p class="text-center"><span class="fs-5 fw-bold">나는~ 행복한~ 고구마~</span></p>
@@ -55,11 +51,13 @@ import { onMounted, ref } from 'vue'
 import MiniItemViewVue from './MiniItemView.vue'
 
 const auth = ref()
+const displayName = ref()
 
 onMounted(() => {
   auth.value = getAuth().onAuthStateChanged(function (user) {
     console.log(user)
     if (user) {
+      displayName.value = user.displayName;
       // Do Something
     } else {
       goToLogin()
