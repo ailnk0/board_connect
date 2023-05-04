@@ -16,6 +16,7 @@ import {
 import * as firebaseui from 'firebaseui'
 //import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/authStore'
+import router from '@/router'
 
 const auth = ref()
 
@@ -24,15 +25,17 @@ const { init } = store
 //const { uid } = storeToRefs(store)
 
 onMounted(() => {
-  auth.value = getAuth()
-  initAuthUI()
+  auth.value = getAuth().onAuthStateChanged(function (user) {
+    console.log(user)
+    if (user) {
+      router.push('/')
+    } else {
+      initAuthUI()
+    }
+  })
 })
 
 function initAuthUI() {
-  if (auth.value.currentUser != null) {
-    return
-  }
-
   let uiConfig = {
     signInSuccessUrl: '/',
     signInOptions: [

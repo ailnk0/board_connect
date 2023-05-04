@@ -4,7 +4,7 @@
       <div>
         <button class="btn border-0 navbar-brand" type="button" @click="$router.push('/')">
           <span class="fs-2">
-            <font-awesome-icon icon="fa-solid fa-dice" />
+            <font-awesome-icon :icon="['fas', 'dice']" />
           </span>
         </button>
       </div>
@@ -124,7 +124,14 @@ import { getAuth, signOut } from 'firebase/auth'
 const auth = ref()
 
 onMounted(() => {
-  auth.value = getAuth()
+  auth.value = getAuth().onAuthStateChanged(function (user) {
+    console.log(user)
+    if (user) {
+      // Do Something
+    } else {
+      // Do Something
+    }
+  })
 })
 
 function logout() {

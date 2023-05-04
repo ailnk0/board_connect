@@ -23,23 +23,23 @@
         <div class="rating">
           <input type="radio" name="star" id="star1" value="1" />
           <label for="star1">
-            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon :icon="['fas', 'star']" />
           </label>
           <input type="radio" name="star" id="star2" value="2" />
           <label for="star2">
-            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon :icon="['fas', 'star']" />
           </label>
           <input type="radio" name="star" id="star3" value="3" />
           <label for="star3">
-            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon :icon="['fas', 'star']" />
           </label>
           <input type="radio" name="star" id="star4" value="4" />
           <label for="star4">
-            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon :icon="['fas', 'star']" />
           </label>
           <input type="radio" name="star" id="star5" value="5" />
           <label for="star5">
-            <font-awesome-icon icon="fa-solid fa-star" />
+            <font-awesome-icon :icon="['fas', 'star']" />
           </label>
         </div>
       </div>
