@@ -9,8 +9,8 @@
         </div>
         <div class="d-flex justify-content-end align-items-center">
           <p class="card-text">
-            <i class="bi bi-star-fill m-1"></i>
-            <span>5.0</span>
+            <font-awesome-icon :icon="['fas', 'star']" style="color: #ffd700" />
+            <span> 5.0</span>
           </p>
         </div>
       </div>
@@ -20,13 +20,13 @@
       </p>
       <div class="d-flex justify-content-start mb-2">
         <div>
-          <i class="bi bi-heart-fill m-1"></i>
-          <span>47</span>
+          <font-awesome-icon :icon="['fas', 'heart']" />
+          <span> 47</span>
         </div>
         <div class="mx-2"></div>
         <div>
-          <i class="bi bi-chat-fill m-1"></i>
-          <span>3</span>
+          <font-awesome-icon :icon="['fas', 'comment']" />
+          <span> 3</span>
         </div>
       </div>
       <p class="card-text"><small class="text-body-secondary">3분 전</small></p>

@@ -10,10 +10,10 @@
       </div>
       <div>
         <button class="btn border-0" type="button" @click="$router.push('/search')">
-          <i class="bi bi-search fs-5"></i>
+          <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
         </button>
         <button class="btn border-0" type="button" @click="$router.push('/heart')">
-          <i class="bi bi-heart fs-5"></i>
+          <font-awesome-icon :icon="['fas', 'heart']" />
         </button>
         <button
           class="btn border-0"
@@ -23,7 +23,7 @@
           aria-controls="offcanvasNavbar"
           aria-label="Toggle navigation"
         >
-          <i class="bi bi-list fs-2"></i>
+          <font-awesome-icon :icon="['fas', 'bars']" />
         </button>
       </div>
       <div
@@ -53,31 +53,31 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/">
-                <i class="bi bi-house"></i>
+                <font-awesome-icon :icon="['fas', 'house']" />
                 <span> 홈</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/search')">
-                <i class="bi bi-search"></i>
+                <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
                 <span> 검색</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/heart')">
-                <i class="bi bi-heart"></i>
+                <font-awesome-icon :icon="['fas', 'heart']" />
                 <span> 알림</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/write-post')">
-                <i class="bi bi-pencil"></i>
+                <font-awesome-icon :icon="['fas', 'pencil']" />
                 <span> 글 작성</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/profile')">
-                <i class="bi bi-person-circle"></i>
+                <font-awesome-icon :icon="['fas', 'circle-user']" />
                 <span> 프로필</span>
               </a>
             </li>
@@ -98,7 +98,7 @@
                     data-bs-dismiss="offcanvas"
                     @click="router.push('/log-in')"
                   >
-                    <i class="bi bi-gear"></i>
+                    <font-awesome-icon :icon="['fas', 'gear']" />
                     <span> 설정</span>
                   </a>
                 </li>
@@ -106,8 +106,16 @@
                   <hr class="dropdown-divider" />
                 </li>
                 <li>
-                  <a class="dropdown-item" @click="logout">
-                    <i class="bi bi-box-arrow-right"></i>
+                  <a
+                    class="dropdown-item"
+                    data-bs-dismiss="offcanvas"
+                    @click="router.push('/log-in')"
+                  >
+                    <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
+                    <span> 로그인</span>
+                  </a>
+                  <a class="dropdown-item" data-bs-dismiss="offcanvas" @click="logout">
+                    <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
                     <span> 로그아웃</span>
                   </a>
                 </li>
