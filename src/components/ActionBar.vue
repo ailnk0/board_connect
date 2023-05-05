@@ -109,12 +109,18 @@
                   <a
                     class="dropdown-item"
                     data-bs-dismiss="offcanvas"
+                    v-if="!isLogin"
                     @click="router.push('/log-in')"
                   >
                     <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
                     <span> 로그인</span>
                   </a>
-                  <a class="dropdown-item" data-bs-dismiss="offcanvas" @click="logout">
+                  <a
+                    class="dropdown-item"
+                    data-bs-dismiss="offcanvas"
+                    v-if="isLogin"
+                    @click="logout"
+                  >
                     <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
                     <span> 로그아웃</span>
                   </a>
@@ -135,14 +141,15 @@ import router from '@/router'
 import { getAuth, signOut } from 'firebase/auth'
 
 const auth = ref()
+const isLogin = ref(false)
 
 onMounted(() => {
   auth.value = getAuth().onAuthStateChanged(function (user) {
     console.log(user)
     if (user) {
-      // Do Something
+      isLogin.value = true
     } else {
-      // Do Something
+      isLogin.value = false
     }
   })
 })
