@@ -45,10 +45,10 @@
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
               <div>
-                <span class="fw-bold">{{ auth?.currentUser?.displayName }}</span>
+                <span class="fw-bold">{{ store.user?.displayName }}</span>
               </div>
               <div>
-                <span>{{ auth?.currentUser?.email }}</span>
+                <span>{{ store.user?.email }}</span>
               </div>
             </li>
             <li class="nav-item">
@@ -96,7 +96,7 @@
                   <a
                     class="dropdown-item"
                     data-bs-dismiss="offcanvas"
-                    @click="router.push('/log-in')"
+                    @click="router.push('/help')"
                   >
                     <font-awesome-icon :icon="['fas', 'gear']" />
                     <span> 설정</span>
@@ -109,7 +109,7 @@
                   <a
                     class="dropdown-item"
                     data-bs-dismiss="offcanvas"
-                    v-if="!isLogin"
+                    v-if="!store.isLogin"
                     @click="router.push('/log-in')"
                   >
                     <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
@@ -118,8 +118,8 @@
                   <a
                     class="dropdown-item"
                     data-bs-dismiss="offcanvas"
-                    v-if="isLogin"
-                    @click="logout"
+                    v-if="store.isLogin"
+                    @click="store.logout"
                   >
                     <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
                     <span> 로그아웃</span>
@@ -135,36 +135,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 //import { RouterLink } from 'vue-router'
 import router from '@/router'
-import { getAuth, signOut } from 'firebase/auth'
+import { useStore } from '@/stores/authStore'
 
-const auth = ref()
-const isLogin = ref(false)
+const store = useStore()
 
-onMounted(() => {
-  auth.value = getAuth().onAuthStateChanged(function (user) {
-    console.log(user)
-    if (user) {
-      isLogin.value = true
-    } else {
-      isLogin.value = false
-    }
-  })
-})
-
-function logout() {
-  signOut(getAuth())
-    .then(() => {
-      // Sign-out successful.
-      console.log('sign-out')
-    })
-    .catch((error) => {
-      // An error happened.
-      console.log(error)
-    })
-}
+onMounted(() => {})
 </script>
 
 <style scoped></style>

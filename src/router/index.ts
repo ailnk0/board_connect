@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { useStore } from '@/stores/authStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,6 +61,16 @@ const router = createRouter({
       component: () => import('../views/HeartView.vue')
     }
   ]
+})
+
+const needToLogin = ['profile', 'edit-profile', 'write-post', 'edit-post', 'heart']
+
+router.beforeEach((to) => {
+  const store = useStore()
+
+  if (!store.isLogin && needToLogin.includes(to.name as string)) {
+    return { name: 'log-in' }
+  }
 })
 
 export default router

@@ -19,6 +19,8 @@ import SupportIcon from './icons/IconSupport.vue'
     provides you with all information you need to get started.
   </WelcomeItem>
 
+  <hr />
+
   <WelcomeItem>
     <template #icon>
       <ToolingIcon />
@@ -39,6 +41,8 @@ import SupportIcon from './icons/IconSupport.vue'
     More instructions are available in <code>README.md</code>.
   </WelcomeItem>
 
+  <hr />
+
   <WelcomeItem>
     <template #icon>
       <EcosystemIcon />
@@ -54,6 +58,8 @@ import SupportIcon from './icons/IconSupport.vue'
     <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">Awesome Vue</a>
     a visit.
   </WelcomeItem>
+
+  <hr />
 
   <WelcomeItem>
     <template #icon>
@@ -72,6 +78,8 @@ import SupportIcon from './icons/IconSupport.vue'
     <a href="https://twitter.com/vuejs" target="_blank" rel="noopener">@vuejs</a>
     twitter account for latest news in the Vue world.
   </WelcomeItem>
+
+  <hr />
 
   <WelcomeItem>
     <template #icon>

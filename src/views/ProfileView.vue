@@ -15,7 +15,7 @@
       </div>
       <div>
         <div class="text-center">
-          <span class="fs-1 fw-bold">{{ displayName }}</span>
+          <span class="fs-1 fw-bold">{{ store.user?.displayName }}</span>
         </div>
         <div class="text-center"></div>
         <p class="text-center"><span class="fs-5 fw-bold">나는~ 행복한~ 고구마~</span></p>
@@ -50,23 +50,16 @@
 
 <script setup lang="ts">
 import router from '@/router'
-import { getAuth } from 'firebase/auth'
-import { onMounted, ref } from 'vue'
-import MiniItemViewVue from './MiniItemView.vue'
+import { onMounted } from 'vue'
+import MiniItemViewVue from '@/views/MiniItemView.vue'
+import { useStore } from '@/stores/authStore'
 
-const auth = ref()
-const displayName = ref()
+const store = useStore()
 
 onMounted(() => {
-  auth.value = getAuth().onAuthStateChanged(function (user) {
-    console.log(user)
-    if (user) {
-      displayName.value = user.displayName
-      // Do Something
-    } else {
-      goToLogin()
-    }
-  })
+  if (!store.isLogin) {
+    goToLogin()
+  }
 })
 
 function goToLogin() {
