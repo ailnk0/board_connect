@@ -52,31 +52,51 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" role="button" data-bs-dismiss="offcanvas" href="/">
                 <font-awesome-icon :icon="['fas', 'house']" />
                 <span> 홈</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/search')">
+              <a
+                class="nav-link"
+                role="button"
+                data-bs-dismiss="offcanvas"
+                @click="router.push('/search')"
+              >
                 <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
                 <span> 검색</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/heart')">
+              <a
+                class="nav-link"
+                role="button"
+                data-bs-dismiss="offcanvas"
+                @click="router.push('/heart')"
+              >
                 <font-awesome-icon :icon="['fas', 'heart']" />
                 <span> 알림</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/write-post')">
+              <a
+                class="nav-link"
+                role="button"
+                data-bs-dismiss="offcanvas"
+                @click="router.push('/write-post')"
+              >
                 <font-awesome-icon :icon="['fas', 'pencil']" />
                 <span> 글 작성</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-bs-dismiss="offcanvas" @click="router.push('/profile')">
+              <a
+                class="nav-link"
+                role="button"
+                data-bs-dismiss="offcanvas"
+                @click="router.push('/profile')"
+              >
                 <font-awesome-icon :icon="['fas', 'circle-user']" />
                 <span> 프로필</span>
               </a>
@@ -95,6 +115,7 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    role="button"
                     data-bs-dismiss="offcanvas"
                     @click="router.push('/help')"
                   >
@@ -108,6 +129,7 @@
                 <li>
                   <a
                     class="dropdown-item"
+                    role="button"
                     data-bs-dismiss="offcanvas"
                     v-if="!store.isLogin"
                     @click="router.push('/log-in')"
@@ -117,6 +139,7 @@
                   </a>
                   <a
                     class="dropdown-item"
+                    role="button"
                     data-bs-dismiss="offcanvas"
                     v-if="store.isLogin"
                     @click="store.logout"
