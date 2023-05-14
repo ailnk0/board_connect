@@ -1,5 +1,6 @@
 import { ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
+import { firebaseApp } from '@/main'
 import {
   getAuth,
   signOut,
@@ -10,10 +11,15 @@ import {
   type User
 } from 'firebase/auth'
 import * as firebaseui from 'firebaseui'
+import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore'
 
 export const useStore = defineStore('store', () => {
   const isLogin: Ref<boolean> = ref(false)
   const user: Ref<User | null> = ref(null)
+  const COL = {
+    USERS: 'users',
+    POSTS: 'posts'
+  }
 
   function $reset() {
     isLogin.value = false
@@ -23,7 +29,6 @@ export const useStore = defineStore('store', () => {
   function initAuth() {
     const auth = getAuth()
     auth.onAuthStateChanged((userInfo: User | null) => {
-      console.log(userInfo)
       if (userInfo) {
         isLogin.value = true
         user.value = userInfo
@@ -67,5 +72,16 @@ export const useStore = defineStore('store', () => {
       })
   }
 
-  return { isLogin, user, $reset, initAuth, initAuthUI, logout }
+  async function addData(collectionName: string, data: object) {
+    const db = getFirestore(firebaseApp)
+    return await addDoc(collection(db, collectionName), data)
+  }
+
+  async function getDatas(collectionName: string) {
+    const db = getFirestore(firebaseApp)
+    const querySnapshot = await getDocs(collection(db, collectionName))
+    return querySnapshot
+  }
+
+  return { COL, isLogin, user, $reset, initAuth, initAuthUI, logout, addData, getDatas }
 })
