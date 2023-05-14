@@ -13,7 +13,7 @@
           <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
         </button>
         <button class="btn border-0" type="button" @click="$router.push('/heart')">
-          <font-awesome-icon :icon="['fas', 'heart']" />
+          <font-awesome-icon :icon="['far', 'heart']" />
         </button>
         <button
           class="btn border-0"
@@ -75,7 +75,7 @@
                 data-bs-dismiss="offcanvas"
                 @click="router.push('/heart')"
               >
-                <font-awesome-icon :icon="['fas', 'heart']" />
+                <font-awesome-icon :icon="['far', 'heart']" />
                 <span> 알림</span>
               </a>
             </li>
