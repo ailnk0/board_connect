@@ -12,26 +12,35 @@ import {
 } from 'firebase/auth'
 import * as firebaseui from 'firebaseui'
 import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore'
+import router from '@/router'
 
 export const useStore = defineStore('store', () => {
-  const isLogin: Ref<boolean> = ref(false)
-  const user: Ref<User | null> = ref(null)
+  const SESSION_KEY = 'UID'
   const COL = {
     USERS: 'users',
     POSTS: 'posts'
   }
 
+  const isLogin: Ref<boolean> = ref(hasSession())
+  const user: Ref<User | null> = ref(null)
+
   function $reset() {
     isLogin.value = false
     user.value = null
+    localStorage.removeItem(SESSION_KEY)
+  }
+
+  function onLogin(_user: User | null) {
+    if (_user == null) return
+    localStorage.setItem(SESSION_KEY, _user.uid)
+    user.value = _user
   }
 
   function initAuth() {
     const auth = getAuth()
-    auth.onAuthStateChanged((userInfo: User | null) => {
-      if (userInfo) {
-        isLogin.value = true
-        user.value = userInfo
+    auth.onAuthStateChanged((_user: User | null) => {
+      if (_user) {
+        onLogin(_user)
       } else {
         $reset()
       }
@@ -55,19 +64,24 @@ export const useStore = defineStore('store', () => {
         uiShown: () => {}
       }
     }
-    const ui = new firebaseui.auth.AuthUI(auth)
+    let ui = firebaseui.auth.AuthUI.getInstance()
+    if (!ui) {
+      ui = new firebaseui.auth.AuthUI(auth)
+    }
     ui.start('#firebaseui-auth-container', uiConfig)
+  }
+
+  function hasSession() {
+    return localStorage.getItem(SESSION_KEY) != null
   }
 
   function logout() {
     const auth = getAuth()
     signOut(auth)
       .then(() => {
-        // Sign-out successful.
-        console.log('sign-out')
+        router.push('/')
       })
       .catch((error) => {
-        // An error happened.
         console.log(error)
       })
   }
