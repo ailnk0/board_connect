@@ -1,7 +1,18 @@
 <template>
-  <div class="m-4">
+  <TheTitle>
+    <template #btn_start>
+      <button class="btn btn-lg border-0" role="button" @click="$router.go(-1)">취소</button>
+    </template>
+    <template #title>리뷰 작성</template>
+    <template #btn_end>
+      <button class="btn btn-lg border-0" role="button" @click="submitPost" :disabled="noSubmit">
+        확인
+      </button>
+    </template>
+  </TheTitle>
+  <div class="mt-5">
     <div class="row">
-      <div class="col">
+      <div class="col d-flex justify-content-center">
         <div class="form-group">
           <div class="rating">
             <input v-model="rating" type="radio" name="star" id="star5" value="5.0" checked />
@@ -28,28 +39,17 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-4">
       <div class="col">
         <div class="form-group">
           <textarea
             class="form-control border-0 shadow-none my-4"
-            style="height: 60vh"
+            style="height: 50vh"
             id="postContent"
             placeholder="감상을 자유롭게 표현해주세요"
             v-model="postContent"
           ></textarea>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <button
-          class="btn btn-outline-primary rounded-pill w-100"
-          @click="submitPost"
-          :disabled="noSubmit()"
-        >
-          저장
-        </button>
       </div>
     </div>
   </div>
@@ -59,6 +59,7 @@
 import { ref } from 'vue'
 import { useStore } from '@/stores/authStore'
 import router from '@/router'
+import TheTitle from '../components/TheTitle.vue'
 
 const rating = ref('5.0')
 const postContent = ref('')

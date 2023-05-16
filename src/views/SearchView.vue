@@ -1,10 +1,14 @@
 <template>
   <div class="container">
-    <div class="d-flex justify-content-between align-items-center">
-      <div><span class="fs-5">뒤로</span></div>
-      <div><span class="fs-1 fw-bold">검색</span></div>
-      <div><span class="fs-5">설정</span></div>
-    </div>
+    <TheTitle>
+      <template #btn_start>
+        <a class="nav-link" role="button" @click="$router.go(-1)">뒤로</a>
+      </template>
+      <template #title>검색</template>
+      <template #btn_end>
+        <a class="nav-link" role="button" href="/help">설정</a>
+      </template>
+    </TheTitle>
     <div class="py-5">
       <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -19,6 +23,8 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import TheTitle from '../components/TheTitle.vue'
+</script>
 
 <style scoped></style>

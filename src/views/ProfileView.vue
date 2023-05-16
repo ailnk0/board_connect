@@ -1,10 +1,14 @@
 <template>
   <div class="container">
-    <div class="d-flex justify-content-between align-items-center">
-      <div><span class="fs-5">뒤로</span></div>
-      <div><span class="fs-1 fw-bold">프로필</span></div>
-      <div><span class="fs-5">설정</span></div>
-    </div>
+    <TheTitle>
+      <template #btn_start>
+        <a class="nav-link" role="button" @click="$router.go(-1)">뒤로</a>
+      </template>
+      <template #title>프로필</template>
+      <template #btn_end>
+        <a class="nav-link" role="button" href="/help">설정</a>
+      </template>
+    </TheTitle>
     <div class="my-5">
       <div class="my-4">
         <img
@@ -49,9 +53,10 @@
 </template>
 
 <script setup lang="ts">
+import TheTitle from '../components/TheTitle.vue'
+import MiniItemViewVue from '@/components/MiniItemView.vue'
 import router from '@/router'
 import { onMounted } from 'vue'
-import MiniItemViewVue from '@/views/MiniItemView.vue'
 import { useStore } from '@/stores/authStore'
 
 const store = useStore()
