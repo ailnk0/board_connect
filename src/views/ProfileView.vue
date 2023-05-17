@@ -14,6 +14,7 @@
         <img
           :src="getPhotoURL()"
           class="rounded-circle mx-auto d-block mb-3"
+          style="width: 250px; height: 250px"
           referrerpolicy="no-referrer"
           alt="프로필 사진"
         />

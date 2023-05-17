@@ -14,11 +14,16 @@
         <img
           :src="getPhotoURL()"
           class="rounded-circle mx-auto d-block mb-3"
+          style="width: 250px; height: 250px"
           referrerpolicy="no-referrer"
           alt="프로필 사진"
         />
       </div>
       <div>
+        <div class="mb-3 text-center">
+          <input type="file" ref="input" style="display: none" @change="loadFile" />
+          <a class="link" @click="openFileChooser">프로필 사진 편집</a>
+        </div>
         <div class="mb-3 border-bottom">
           <input
             v-model="displayName"
@@ -44,14 +49,30 @@
 <script setup lang="ts">
 import { useStore } from '@/stores/authStore'
 import { storeToRefs } from 'pinia'
+import { ref, type Ref } from 'vue'
 import TheTitle from '../components/TheTitle.vue'
 
 const store = useStore()
 const { editProfile } = store
-const { displayName, aboutMe, photoURL } = storeToRefs(store)
+const { displayName, aboutMe, photoURL, photoChanged } = storeToRefs(store)
+
+const input: Ref<HTMLElement | null> = ref(null)
 
 function getPhotoURL() {
   return photoURL.value || 'https://picsum.photos/250'
+}
+
+function openFileChooser() {
+  input.value?.click()
+}
+
+function loadFile() {
+  const target = input.value as HTMLInputElement
+  const file = target.files?.item(0)
+  if (file) {
+    photoURL.value = URL.createObjectURL(file)
+    photoChanged.value = file
+  }
 }
 </script>
 

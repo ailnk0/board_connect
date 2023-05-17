@@ -13,6 +13,7 @@ import {
 import * as firebaseui from 'firebaseui'
 import { getFirestore, collection, addDoc, getDocs, setDoc, doc, getDoc } from 'firebase/firestore'
 import router from '@/router'
+import * as fs from 'firebase/storage'
 
 export const useStore = defineStore('store', () => {
   const SESSION_KEY = 'UID'
@@ -26,6 +27,7 @@ export const useStore = defineStore('store', () => {
   const uid: Ref<string> = ref('')
   const displayName: Ref<string> = ref('')
   const photoURL: Ref<string> = ref('')
+  const photoChanged: Ref<File | null> = ref(null)
   const email: Ref<string> = ref('')
   const emailVerified: Ref<boolean> = ref(false)
   const aboutMe: Ref<string> = ref('')
@@ -38,6 +40,7 @@ export const useStore = defineStore('store', () => {
     uid.value = ''
     displayName.value = ''
     photoURL.value = ''
+    photoChanged.value = null
     email.value = ''
     emailVerified.value = false
     aboutMe.value = ''
@@ -49,6 +52,36 @@ export const useStore = defineStore('store', () => {
   function editProfile() {
     if (isLogin.value == false) return
 
+    if (photoChanged.value) {
+      const storage = fs.getStorage(firebaseApp)
+      const storageRef = fs.ref(storage, '500/' + photoChanged.value.name)
+      fs.uploadBytes(storageRef, photoChanged.value)
+        .catch((error) => {
+          console.log(error)
+        })
+        .then((snapshot) => {
+          console.log(snapshot)
+          if (snapshot) {
+            const storage = fs.getStorage(firebaseApp)
+            fs.getDownloadURL(fs.ref(storage, snapshot.ref.fullPath))
+              .catch((error) => {
+                console.log(error)
+              })
+              .then((url) => {
+                if (url) {
+                  photoURL.value = url
+                  photoChanged.value = null
+                  saveProfile()
+                }
+              })
+          }
+        })
+    } else {
+      saveProfile()
+    }
+  }
+
+  function saveProfile() {
     const data = {
       displayName: displayName.value,
       photoURL: photoURL.value,
@@ -177,6 +210,7 @@ export const useStore = defineStore('store', () => {
     isLogin,
     user,
     photoURL,
+    photoChanged,
     displayName,
     email,
     emailVerified,
