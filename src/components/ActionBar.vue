@@ -3,17 +3,21 @@
     <div class="container">
       <div>
         <button class="btn border-0 navbar-brand" type="button" @click="$router.push('/')">
-          <span class="fs-2">
+          <span class="fs-3">
             <font-awesome-icon :icon="['fas', 'dice']" />
           </span>
         </button>
       </div>
       <div>
         <button class="btn border-0" type="button" @click="$router.push('/search')">
-          <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+          <span class="fs-5">
+            <i class="bi bi-search"></i>
+          </span>
         </button>
         <button class="btn border-0" type="button" @click="$router.push('/heart')">
-          <font-awesome-icon :icon="['far', 'heart']" />
+          <span class="fs-5">
+            <i class="bi bi-heart"></i>
+          </span>
         </button>
         <button
           class="btn border-0"
@@ -23,7 +27,13 @@
           aria-controls="offcanvasNavbar"
           aria-label="Toggle navigation"
         >
-          <font-awesome-icon :icon="['fas', 'bars']" />
+          <img
+            :src="getPhotoURL()"
+            class="rounded-circle"
+            style="width: 30px; height: 30px"
+            referrerpolicy="no-referrer"
+            alt="프로필 사진"
+          />
         </button>
       </div>
       <div
@@ -53,7 +63,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" role="button" data-bs-dismiss="offcanvas" href="/">
-                <font-awesome-icon :icon="['fas', 'house']" />
+                <i class="bi bi-house"></i>
                 <span> 홈</span>
               </a>
             </li>
@@ -64,7 +74,7 @@
                 data-bs-dismiss="offcanvas"
                 @click="router.push('/search')"
               >
-                <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+                <i class="bi bi-search"></i>
                 <span> 검색</span>
               </a>
             </li>
@@ -75,7 +85,7 @@
                 data-bs-dismiss="offcanvas"
                 @click="router.push('/heart')"
               >
-                <font-awesome-icon :icon="['far', 'heart']" />
+                <i class="bi bi-heart"></i>
                 <span> 알림</span>
               </a>
             </li>
@@ -86,7 +96,7 @@
                 data-bs-dismiss="offcanvas"
                 @click="router.push('/write-post')"
               >
-                <font-awesome-icon :icon="['fas', 'pencil']" />
+                <i class="bi bi-pencil"></i>
                 <span> 글 작성</span>
               </a>
             </li>
@@ -97,7 +107,7 @@
                 data-bs-dismiss="offcanvas"
                 @click="router.push('/profile')"
               >
-                <font-awesome-icon :icon="['fas', 'circle-user']" />
+                <i class="bi bi-person-circle"></i>
                 <span> 프로필</span>
               </a>
             </li>
@@ -119,7 +129,7 @@
                     data-bs-dismiss="offcanvas"
                     @click="router.push('/help')"
                   >
-                    <font-awesome-icon :icon="['fas', 'gear']" />
+                    <i class="bi bi-gear"></i>
                     <span> 설정</span>
                   </a>
                 </li>
@@ -134,7 +144,7 @@
                     v-if="!store.isLogin"
                     @click="router.push('/log-in')"
                   >
-                    <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
+                    <i class="bi bi-box-arrow-left"></i>
                     <span> 로그인</span>
                   </a>
                   <a
@@ -144,7 +154,7 @@
                     v-if="store.isLogin"
                     @click="store.logout"
                   >
-                    <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
+                    <i class="bi bi-box-arrow-right"></i>
                     <span> 로그아웃</span>
                   </a>
                 </li>
@@ -158,14 +168,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-//import { RouterLink } from 'vue-router'
 import router from '@/router'
 import { useStore } from '@/stores/authStore'
+import { storeToRefs } from 'pinia'
 
 const store = useStore()
+const { photoURL } = storeToRefs(store)
 
-onMounted(() => {})
+function getPhotoURL() {
+  return photoURL.value || 'https://picsum.photos/250'
+}
 </script>
 
 <style scoped></style>
