@@ -1,52 +1,58 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <form>
-              <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" class="form-control" value="John Doe" />
-              </div>
-              <div class="form-group">
-                <label for="email">Email:</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="form-control"
-                  value="johndoe@example.com"
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label for="image">Profile Picture:</label>
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="image" name="image" />
-                  <label class="custom-file-label" for="image">Choose file</label>
-                </div>
-                <div class="mt-3">
-                  <label>Current Profile Picture:</label>
-                  <img
-                    src="https://via.placeholder.com/150"
-                    alt="current-profile-picture"
-                    class="d-block rounded-circle my-3"
-                  />
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary">Save Changes</button>
-            </form>
-          </div>
+    <TheTitle>
+      <template #btn_start>
+        <button class="btn btn-lg border-0" @click="$router.go(-1)">뒤로</button>
+      </template>
+      <template #title>프로필 편집</template>
+      <template #btn_end>
+        <button class="btn btn-lg border-0" @click="editProfile">확인</button>
+      </template>
+    </TheTitle>
+    <div class="my-5">
+      <div class="my-4">
+        <img
+          :src="getPhotoURL()"
+          class="rounded-circle mx-auto d-block mb-3"
+          referrerpolicy="no-referrer"
+          alt="프로필 사진"
+        />
+      </div>
+      <div>
+        <div class="mb-3 border-bottom">
+          <input
+            v-model="displayName"
+            type="text"
+            class="form-control shadow-none border-0 fs-1 fw-bold text-center"
+            placeholder="이름"
+          />
+        </div>
+        <div class="mb-2 border-bottom">
+          <textarea
+            id="about_me"
+            v-model="aboutMe"
+            class="form-control border-bottom shadow-none border-0 fs-5 fw-bold text-center"
+            maxlength="150"
+            placeholder="소개"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useStore } from '@/stores/authStore'
+import { storeToRefs } from 'pinia'
+import TheTitle from '../components/TheTitle.vue'
+
+const store = useStore()
+const { editProfile } = store
+const { displayName, aboutMe, photoURL } = storeToRefs(store)
+
+function getPhotoURL() {
+  return photoURL.value || 'https://picsum.photos/250'
+}
+</script>
 
 <style scoped></style>

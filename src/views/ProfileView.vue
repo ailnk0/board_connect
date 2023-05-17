@@ -6,23 +6,26 @@
       </template>
       <template #title>프로필</template>
       <template #btn_end>
-        <a class="nav-link" role="button" href="/help">설정</a>
+        <a class="nav-link" role="button" href="/edit-profile">편집</a>
       </template>
     </TheTitle>
     <div class="my-5">
       <div class="my-4">
         <img
-          src="https://picsum.photos/250"
+          :src="getPhotoURL()"
           class="rounded-circle mx-auto d-block mb-3"
-          alt="User photo"
+          referrerpolicy="no-referrer"
+          alt="프로필 사진"
         />
       </div>
       <div>
         <div class="text-center">
-          <span class="fs-1 fw-bold">{{ store.user?.displayName }}</span>
+          <span class="fs-1 fw-bold">{{ displayName }}</span>
         </div>
         <div class="text-center"></div>
-        <p class="text-center"><span class="fs-5 fw-bold">나는~ 행복한~ 고구마~</span></p>
+        <p class="text-center">
+          <span class="fs-5 fw-bold">{{ aboutMe }}</span>
+        </p>
       </div>
     </div>
     <div>
@@ -53,22 +56,16 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import TheTitle from '../components/TheTitle.vue'
 import MiniItemViewVue from '@/components/MiniItemView.vue'
-import router from '@/router'
-import { onMounted } from 'vue'
 import { useStore } from '@/stores/authStore'
 
 const store = useStore()
+const { displayName, aboutMe, photoURL } = storeToRefs(store)
 
-onMounted(() => {
-  if (!store.isLogin) {
-    goToLogin()
-  }
-})
-
-function goToLogin() {
-  router.push('log-in')
+function getPhotoURL() {
+  return photoURL.value || 'https://picsum.photos/250'
 }
 </script>
 
