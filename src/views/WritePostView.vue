@@ -5,7 +5,7 @@
     </template>
     <template #title>리뷰 작성</template>
     <template #btn_end>
-      <button class="btn btn-lg border-0" role="button" @click="submitPost" :disabled="noSubmit">
+      <button class="btn btn-lg border-0" role="button" @click="submitPost" :disabled="noSubmit()">
         확인
       </button>
     </template>
