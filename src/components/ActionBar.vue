@@ -30,7 +30,7 @@
           <img
             :src="getPhotoURL()"
             class="rounded-circle"
-            style="width: 30px; height: 30px"
+            style="width: 32px; height: 32px"
             referrerpolicy="no-referrer"
             alt="프로필 사진"
           />
@@ -176,7 +176,7 @@ const store = useStore()
 const { photoURL } = storeToRefs(store)
 
 function getPhotoURL() {
-  return photoURL.value || 'https://picsum.photos/250'
+  return photoURL.value || 'src/assets/blank-profile_640.png'
 }
 </script>
 

@@ -66,7 +66,7 @@ const store = useStore()
 const { displayName, aboutMe, photoURL } = storeToRefs(store)
 
 function getPhotoURL() {
-  return photoURL.value || 'https://picsum.photos/250'
+  return photoURL.value || 'src/assets/blank-profile_640.png'
 }
 </script>
 

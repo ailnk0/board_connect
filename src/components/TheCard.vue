@@ -1,10 +1,10 @@
 <template>
   <div class="card mb-3">
-    <img src="https://picsum.photos/2000/2000" class="card-img-top" alt="..." />
+    <slot name="image" />
     <div class="card-body">
       <div class="d-flex justify-content-between mb-2">
         <div class="d-flex justify-content-start align-items-center">
-          <img src="https://picsum.photos/30/30" class="rounded-circle me-3" alt="..." />
+          <slot name="profile-image" />
           <h5 class="mt-1">
             <slot name="user_name" />
           </h5>

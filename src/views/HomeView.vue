@@ -1,11 +1,17 @@
 <template>
-  <TheCard v-for="d in docs" :key="d.data().createdAt.seconds">
+  <TheCard v-for="(d, i) in docs" :key="d.data().createdAt.seconds">
     <template #user_name>{{ d.data().user_name }}</template>
     <template #content>{{ d.data().content }}</template>
     <template #createdAt>{{ d.data().createdAt.toDate().toLocaleString() }}</template>
     <template #rating>{{ ' ' + d.data().rating }}</template>
     <template #like>{{ ' ' + d.data().like }}</template>
     <template #num_comment>{{ ' ' + d.data().num_comment }}</template>
+    <template #image>
+      <img :src="getPhotoURL(i)" class="card-img-top" alt="..." />
+    </template>
+    <template #profile-image>
+      <img src="https://picsum.photos/32/32" class="rounded-circle me-3" alt="..." />
+    </template>
   </TheCard>
 </template>
 
@@ -31,6 +37,10 @@ onMounted(() => {
       })
     })
 })
+
+function getPhotoURL(index: number) {
+  return 'https://picsum.photos/1000/1000?random=' + index.toString()
+}
 </script>
 
 <style scoped></style>

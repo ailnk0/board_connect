@@ -59,7 +59,7 @@ const { displayName, aboutMe, photoURL, photoChanged } = storeToRefs(store)
 const input: Ref<HTMLElement | null> = ref(null)
 
 function getPhotoURL() {
-  return photoURL.value || 'https://picsum.photos/250'
+  return photoURL.value || 'src/assets/blank-profile_640.png'
 }
 
 function openFileChooser() {
