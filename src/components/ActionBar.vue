@@ -28,7 +28,7 @@
           aria-label="Toggle navigation"
         >
           <img
-            :src="getPhotoURL()"
+            :src="getPhotoURL"
             class="rounded-circle"
             style="width: 32px; height: 32px"
             referrerpolicy="no-referrer"
@@ -170,14 +170,9 @@
 <script setup lang="ts">
 import router from '@/router'
 import { useStore } from '@/stores/authStore'
-import { storeToRefs } from 'pinia'
 
 const store = useStore()
-const { photoURL } = storeToRefs(store)
-
-function getPhotoURL() {
-  return photoURL.value || 'src/assets/blank-profile_640.png'
-}
+const { getPhotoURL } = store
 </script>
 
 <style scoped></style>

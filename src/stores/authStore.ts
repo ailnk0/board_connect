@@ -49,6 +49,10 @@ export const useStore = defineStore('store', () => {
     localStorage.removeItem(SESSION_KEY)
   }
 
+  function getPhotoURL() {
+    return photoURL.value || new URL('@/assets/blank-profile_640.png', import.meta.url).href
+  }
+
   function editProfile() {
     if (isLogin.value == false) return
 
@@ -218,6 +222,7 @@ export const useStore = defineStore('store', () => {
     firstName,
     lastName,
     $reset,
+    getPhotoURL,
     editProfile,
     initAuth,
     initAuthUI,

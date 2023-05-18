@@ -12,7 +12,7 @@
     <div class="my-5">
       <div class="my-4">
         <img
-          :src="getPhotoURL()"
+          :src="getPhotoURL"
           class="rounded-circle mx-auto d-block mb-3"
           style="width: 250px; height: 250px"
           referrerpolicy="no-referrer"
@@ -53,14 +53,10 @@ import { ref, type Ref } from 'vue'
 import TheTitle from '../components/TheTitle.vue'
 
 const store = useStore()
-const { editProfile } = store
+const { editProfile, getPhotoURL } = store
 const { displayName, aboutMe, photoURL, photoChanged } = storeToRefs(store)
 
 const input: Ref<HTMLElement | null> = ref(null)
-
-function getPhotoURL() {
-  return photoURL.value || 'src/assets/blank-profile_640.png'
-}
 
 function openFileChooser() {
   input.value?.click()

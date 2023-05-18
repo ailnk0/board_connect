@@ -12,7 +12,7 @@
     <div class="my-5">
       <div class="my-4">
         <img
-          :src="getPhotoURL()"
+          :src="getPhotoURL"
           class="rounded-circle mx-auto d-block mb-3"
           style="width: 250px; height: 250px"
           referrerpolicy="no-referrer"
@@ -63,11 +63,8 @@ import MiniItemViewVue from '@/components/MiniItemView.vue'
 import { useStore } from '@/stores/authStore'
 
 const store = useStore()
-const { displayName, aboutMe, photoURL } = storeToRefs(store)
-
-function getPhotoURL() {
-  return photoURL.value || 'src/assets/blank-profile_640.png'
-}
+const { getPhotoURL } = store
+const { displayName, aboutMe } = storeToRefs(store)
 </script>
 
 <style scoped></style>
