@@ -144,7 +144,7 @@
                     v-if="!store.isLogin"
                     @click="router.push('/log-in')"
                   >
-                    <i class="bi bi-box-arrow-left"></i>
+                    <i class="bi bi-box-arrow-in-right"></i>
                     <span> 로그인</span>
                   </a>
                   <a

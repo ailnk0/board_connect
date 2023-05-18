@@ -175,7 +175,11 @@ export const useStore = defineStore('store', () => {
         EmailAuthProvider.PROVIDER_ID,
         GoogleAuthProvider.PROVIDER_ID,
         FacebookAuthProvider.PROVIDER_ID,
-        TwitterAuthProvider.PROVIDER_ID
+        TwitterAuthProvider.PROVIDER_ID,
+        'apple.com',
+        'microsoft.com',
+        'yahoo.com',
+        'github.com'
       ],
       callbacks: {
         signInSuccessWithAuthResult: () => {

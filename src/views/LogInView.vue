@@ -9,7 +9,7 @@
         <a class="nav-link" role="button" href="/help">설정</a>
       </template>
     </TheTitle>
-    <div class="py-5">
+    <div class="py-5 d-flex justify-content-center align-items-center" style="height: 70vh">
       <div id="firebaseui-auth-container"></div>
     </div>
   </div>
