@@ -21,6 +21,9 @@
       </div>
       <div>
         <div class="text-center">
+          <span class="badge bg-primary" v-if="!emailVerified">이메일 인증 필요</span>
+        </div>
+        <div class="text-center">
           <span class="fs-1 fw-bold">{{ displayName }}</span>
         </div>
         <div class="text-center"></div>
@@ -64,7 +67,7 @@ import { useStore } from '@/stores/authStore'
 
 const store = useStore()
 const { getPhotoURL } = store
-const { displayName, aboutMe } = storeToRefs(store)
+const { displayName, aboutMe, emailVerified } = storeToRefs(store)
 </script>
 
 <style scoped></style>

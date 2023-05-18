@@ -8,7 +8,8 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
   TwitterAuthProvider,
-  type User
+  type User,
+  sendEmailVerification
 } from 'firebase/auth'
 import * as firebaseui from 'firebaseui'
 import { getFirestore, collection, addDoc, getDocs, setDoc, doc, getDoc } from 'firebase/firestore'
@@ -29,7 +30,7 @@ export const useStore = defineStore('store', () => {
   const photoURL: Ref<string> = ref('')
   const photoChanged: Ref<File | null> = ref(null)
   const email: Ref<string> = ref('')
-  const emailVerified: Ref<boolean> = ref(false)
+  const emailVerified: Ref<boolean> = ref(true)
   const aboutMe: Ref<string> = ref('')
   const firstName: Ref<string> = ref('')
   const lastName: Ref<string> = ref('')
@@ -42,11 +43,24 @@ export const useStore = defineStore('store', () => {
     photoURL.value = ''
     photoChanged.value = null
     email.value = ''
-    emailVerified.value = false
+    emailVerified.value = true
     aboutMe.value = ''
     firstName.value = ''
     lastName.value = ''
     localStorage.removeItem(SESSION_KEY)
+  }
+
+  function emailVerification() {
+    if (user.value == null) return
+    if (user.value.emailVerified == true) return
+    const auth = getAuth()
+    auth.useDeviceLanguage()
+    sendEmailVerification(user.value).then(() => {
+      console.assert(
+        '입력하신 메일 주소로 인증 메일이 발송되며 받으신 이메일에 포함되어있는 링크를 클릭하시면 인증이 완료됩니다.' +
+          '\n(이메일이 도착하지 않을 경우 휴지통이나 스팸 메일함을 함께 확인해주세요)'
+      )
+    })
   }
 
   function getPhotoURL() {
@@ -64,7 +78,6 @@ export const useStore = defineStore('store', () => {
           console.log(error)
         })
         .then((snapshot) => {
-          console.log(snapshot)
           if (snapshot) {
             const storage = fs.getStorage(firebaseApp)
             fs.getDownloadURL(fs.ref(storage, snapshot.ref.fullPath))
@@ -90,7 +103,7 @@ export const useStore = defineStore('store', () => {
       displayName: displayName.value,
       photoURL: photoURL.value,
       email: email.value,
-      emailVerified: (emailVerified.value = false),
+      emailVerified: emailVerified.value,
       aboutMe: aboutMe.value,
       firstName: firstName.value,
       lastName: lastName.value
@@ -107,6 +120,7 @@ export const useStore = defineStore('store', () => {
 
   function onLogin(authUser: User | null) {
     if (authUser == null) return
+
     localStorage.setItem(SESSION_KEY, authUser.uid)
 
     user.value = authUser
@@ -126,6 +140,12 @@ export const useStore = defineStore('store', () => {
           aboutMe.value = data.aboutMe || ''
           firstName.value = data.firstName || ''
           lastName.value = data.lastName || ''
+
+          if (emailVerified.value != authUser.emailVerified) {
+            console.assert('이메일이 인증되었습니다')
+            emailVerified.value = authUser.emailVerified
+            editProfile()
+          }
         } else {
           displayName.value = authUser.displayName || ''
           photoURL.value = authUser.photoURL || ''
@@ -139,7 +159,6 @@ export const useStore = defineStore('store', () => {
   function initAuth() {
     const auth = getAuth()
     auth.onAuthStateChanged((authUser: User | null) => {
-      alert(authUser == null ? 'not auth' : authUser.email);
       if (authUser) {
         onLogin(authUser)
       } else {
@@ -162,7 +181,7 @@ export const useStore = defineStore('store', () => {
         signInSuccessWithAuthResult: () => {
           return true
         },
-        uiShown: () => { }
+        uiShown: () => {}
       }
     }
     let ui = firebaseui.auth.AuthUI.getInstance()
@@ -223,6 +242,7 @@ export const useStore = defineStore('store', () => {
     firstName,
     lastName,
     $reset,
+    emailVerification,
     getPhotoURL,
     editProfile,
     initAuth,

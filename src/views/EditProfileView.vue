@@ -41,6 +41,26 @@
             placeholder="소개"
           />
         </div>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control text-center"
+            disabled
+            placeholder="Recipient's username"
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
+            :value="store.email"
+          />
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+            @click="emailVerification"
+            v-if="!emailVerified"
+          >
+            인증
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -53,8 +73,8 @@ import { ref, type Ref } from 'vue'
 import TheTitle from '../components/TheTitle.vue'
 
 const store = useStore()
-const { editProfile, getPhotoURL } = store
-const { displayName, aboutMe, photoURL, photoChanged } = storeToRefs(store)
+const { editProfile, getPhotoURL, emailVerification } = store
+const { displayName, aboutMe, photoURL, photoChanged, emailVerified } = storeToRefs(store)
 
 const input: Ref<HTMLElement | null> = ref(null)
 
