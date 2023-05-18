@@ -28,7 +28,7 @@
           aria-label="Toggle navigation"
         >
           <img
-            :src="getPhotoURL"
+            :src="getPhotoURL()"
             class="rounded-circle"
             style="width: 32px; height: 32px"
             referrerpolicy="no-referrer"

@@ -12,7 +12,7 @@
     <div class="my-5">
       <div class="my-4">
         <img
-          :src="getPhotoURL"
+          :src="getPhotoURL()"
           class="rounded-circle mx-auto d-block mb-3"
           style="width: 250px; height: 250px"
           referrerpolicy="no-referrer"
