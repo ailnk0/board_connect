@@ -139,6 +139,7 @@ export const useStore = defineStore('store', () => {
   function initAuth() {
     const auth = getAuth()
     auth.onAuthStateChanged((authUser: User | null) => {
+      alert(authUser == null ? 'not auth' : authUser.email);
       if (authUser) {
         onLogin(authUser)
       } else {
@@ -161,7 +162,7 @@ export const useStore = defineStore('store', () => {
         signInSuccessWithAuthResult: () => {
           return true
         },
-        uiShown: () => {}
+        uiShown: () => { }
       }
     }
     let ui = firebaseui.auth.AuthUI.getInstance()
