@@ -182,7 +182,8 @@ export const useStore = defineStore('store', () => {
           return true
         },
         uiShown: () => {}
-      }
+      },
+      signInFlow: 'popup'
     }
     let ui = firebaseui.auth.AuthUI.getInstance()
     if (!ui) {
