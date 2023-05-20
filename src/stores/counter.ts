@@ -8,16 +8,18 @@ export const useCounterStore = defineStore('counter', () => {
     count.value++
   }
   function getRating(ratings: number[]) {
-    let total = 0.0
-    let count = 0
-    for (let i = 0; i < ratings.length; i++) {
-      if (ratings[i] === 0) continue
-      count += ratings[i]
-      total += ratings[i] * i
-    }
     let result = '---'
-    if (count != 0) {
-      result = (total / count).toFixed(2)
+    if (ratings && ratings.length != 0) {
+      let total = 0.0
+      let count = 0
+      for (let i = 0; i < ratings.length; i++) {
+        if (ratings[i] === 0) continue
+        count += ratings[i]
+        total += ratings[i] * i
+      }
+      if (count != 0) {
+        result = (total / count).toFixed(2)
+      }
     }
     return result
   }

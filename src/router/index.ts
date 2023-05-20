@@ -64,6 +64,11 @@ const router = createRouter({
       path: '/detail/:id',
       name: 'detail',
       component: () => import('../views/DetailView.vue')
+    },
+    {
+      path: '/manage-book',
+      name: 'manage-book',
+      component: () => import('../views/ManageBookView.vue')
     }
   ]
 })
