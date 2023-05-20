@@ -38,7 +38,7 @@
             <h5 class="card-title"><strong>별점</strong></h5>
             <p class="card-text">
               <font-awesome-icon :icon="['fas', 'star']" style="color: #ffd700" />
-              {{ getRating(books?.ratings) }}
+              {{ counterStore.getRating(books?.ratings) }}
             </p>
           </div>
         </li>
@@ -77,11 +77,13 @@ import TheCard from '@/components/TheCard.vue'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from '@/stores/authStore'
+import { useCounterStore } from '@/stores/counter'
 import { QuerySnapshot, where } from 'firebase/firestore'
 import TheTitle from '@/components/TheTitle.vue'
 
 const route = useRoute()
 const store = useStore()
+const counterStore = useCounterStore()
 const bookId = ref(route.params.id)
 const docs = ref()
 const books = ref()
@@ -108,21 +110,6 @@ onMounted(() => {
       docs.value = (querySnapshot as QuerySnapshot).docs
     })
 })
-
-function getRating(ratings: number[]) {
-  if (!ratings) {
-    return ' 평가 없음'
-  } else {
-    let total = 0.0
-    let count = 0
-    for (let i = 0; i < ratings.length; i++) {
-      if (ratings[i] === 0) continue
-      count += ratings[i]
-      total += ratings[i] * i
-    }
-    return (total / count++).toFixed(2)
-  }
-}
 </script>
 
 <style scoped></style>

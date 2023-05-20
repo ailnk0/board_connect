@@ -41,7 +41,7 @@
               {{ b.data().title }}
             </template>
             <template #rating>
-              {{ getRating(b.data().ratings) }}
+              {{ counterStore.getRating(b.data().ratings) }}
             </template>
           </LargeItemVue>
         </a>
@@ -53,10 +53,12 @@
 <script setup lang="ts">
 import LargeItemVue from '@/components/LargeItem.vue'
 import { useStore } from '@/stores/authStore'
+import { useCounterStore } from '@/stores/counter'
 import type { QuerySnapshot } from 'firebase/firestore'
 import { onMounted, ref } from 'vue'
 
 const store = useStore()
+const counterStore = useCounterStore()
 const books = ref()
 
 onMounted(() => {
@@ -69,21 +71,6 @@ onMounted(() => {
       books.value = (querySnapshot as QuerySnapshot)?.docs
     })
 })
-
-function getRating(ratings: number[]) {
-  if (!ratings) {
-    return ' 평가 없음'
-  } else {
-    let total = 0.0
-    let count = 0
-    for (let i = 0; i < ratings.length; i++) {
-      if (ratings[i] === 0) continue
-      count += ratings[i]
-      total += ratings[i] * i
-    }
-    return (total / count++).toFixed(2)
-  }
-}
 </script>
 
 <style scoped></style>

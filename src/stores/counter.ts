@@ -7,6 +7,19 @@ export const useCounterStore = defineStore('counter', () => {
   function increment() {
     count.value++
   }
-
-  return { count, doubleCount, increment }
+  function getRating(ratings: number[]) {
+    let total = 0.0
+    let count = 0
+    for (let i = 0; i < ratings.length; i++) {
+      if (ratings[i] === 0) continue
+      count += ratings[i]
+      total += ratings[i] * i
+    }
+    let result = '---'
+    if (count != 0) {
+      result = (total / count).toFixed(2)
+    }
+    return result
+  }
+  return { count, doubleCount, increment, getRating }
 })

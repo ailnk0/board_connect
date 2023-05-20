@@ -39,7 +39,7 @@
               {{ b.data()?.title }}
             </template>
             <template #rating>
-              {{ getRating(b.data()?.ratings) }}
+              {{ counterStore.getRating(b.data()?.ratings) }}
             </template>
           </MiniItemVue>
         </a>
@@ -51,12 +51,14 @@
 <script setup lang="ts">
 import MiniItemVue from '@/components/MiniItem.vue'
 import { useStore } from '@/stores/authStore'
+import { useCounterStore } from '@/stores/counter'
 import { getAuth } from 'firebase/auth'
 import type { DocumentSnapshot } from 'firebase/firestore'
 import { storeToRefs } from 'pinia'
 import { onMounted, ref, type Ref } from 'vue'
 
 const store = useStore()
+const counterStore = useCounterStore()
 const books: Ref<DocumentSnapshot[]> = ref([])
 const { uid } = storeToRefs(store)
 
@@ -91,21 +93,6 @@ onMounted(() => {
     }
   })
 })
-
-function getRating(ratings: number[]) {
-  if (!ratings) {
-    return ' 평가 없음'
-  } else {
-    let total = 0.0
-    let count = 0
-    for (let i = 0; i < ratings.length; i++) {
-      if (ratings[i] === 0) continue
-      count += ratings[i]
-      total += ratings[i] * i
-    }
-    return (total / count++).toFixed(2)
-  }
-}
 </script>
 
 <style scoped></style>
