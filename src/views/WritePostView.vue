@@ -68,6 +68,7 @@ import { useStore } from '@/stores/authStore'
 import router from '@/router'
 import TheTitle from '../components/TheTitle.vue'
 import { useRoute } from 'vue-router'
+import { getAuth } from 'firebase/auth'
 
 const route = useRoute()
 const rating = ref('10.0')
@@ -75,46 +76,78 @@ const postContent = ref('')
 const store = useStore()
 
 function submitPost() {
-  const postData = {
-    book_id: route.params.id,
-    rating: rating.value,
-    content: postContent.value,
-    image: '',
-    uid: store.user?.uid,
-    user_name: store.user?.displayName,
-    user_email: store.user?.email,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    like: 0,
-    num_comment: 0
-  }
-  store
-    .addData(store.COL.POSTS, postData)
-    .catch((err) => {
-      console.log(err)
-    })
-    .then(() => {
+  getAuth().onAuthStateChanged((user) => {
+    if (user) {
+      const bookId = route.params.id as string
+      if (bookId === undefined || bookId.length === 0) return
+      const postData = {
+        book_id: bookId,
+        rating: rating.value,
+        content: postContent.value,
+        image: '',
+        uid: store.user?.uid,
+        user_name: store.user?.displayName,
+        user_email: store.user?.email,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        like: 0,
+        num_comment: 0
+      }
+
       store
-        .getData(store.COL.BOOKS, route.params.id as string)
+        .addData(store.COL.POSTS, postData)
         .catch((err) => {
           console.log(err)
         })
-        .then((docSnap) => {
-          if (docSnap && docSnap.exists()) {
-            const data = docSnap.data()
-            const ratings = data.ratings
-            ratings[parseInt(rating.value)] += 1
-            store
-              .setData(store.COL.BOOKS, route.params.id as string, { ratings: ratings })
-              .catch((err) => {
-                console.log(err)
-              })
-              .then(() => {
-                router.push('/')
-              })
-          }
+        .then(() => {
+          store
+            .getData(store.COL.BOOKS, bookId)
+            .catch((err) => {
+              console.log(err)
+            })
+            .then((docSnap) => {
+              if (docSnap && docSnap.exists()) {
+                const data = docSnap.data()
+                const ratings = data.ratings
+                ratings[parseInt(rating.value)] += 1
+                store
+                  .setData(store.COL.BOOKS, bookId, { ratings: ratings })
+                  .catch((err) => {
+                    console.log(err)
+                  })
+                  .then(() => {
+                    store
+                      .getData(store.COL.USERS, store.user?.uid as string)
+                      .catch((err) => {
+                        console.log(err)
+                      })
+                      .then((docSnap) => {
+                        if (docSnap && docSnap.exists()) {
+                          const data = docSnap.data()
+                          let bookIds: string[] = data.bookIds
+                          if (bookIds === undefined) bookIds = []
+                          console.log(bookIds)
+                          if (!bookIds.includes(bookId)) {
+                            bookIds.push(bookId)
+                          }
+                          store
+                            .setData(store.COL.USERS, store.user?.uid as string, {
+                              bookIds: bookIds
+                            })
+                            .catch((err) => {
+                              console.log(err)
+                            })
+                            .then(() => {
+                              router.push('/')
+                            })
+                        }
+                      })
+                  })
+              }
+            })
         })
-    })
+    }
+  })
 }
 
 function noSubmit() {

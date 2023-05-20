@@ -36,7 +36,7 @@
               <img
                 :src="b.data()?.thumbnail"
                 class="card-img-top rounded"
-                style="height: 120px; object-fit: cover"
+                style="height: 160px; object-fit: cover"
                 alt="..."
               />
             </template>
@@ -59,19 +59,17 @@ import { useStore } from '@/stores/authStore'
 import { useCounterStore } from '@/stores/counter'
 import { getAuth } from 'firebase/auth'
 import type { DocumentSnapshot } from 'firebase/firestore'
-import { storeToRefs } from 'pinia'
 import { onMounted, ref, type Ref } from 'vue'
 
 const store = useStore()
 const counterStore = useCounterStore()
 const books: Ref<DocumentSnapshot[]> = ref([])
-const { uid } = storeToRefs(store)
 
 onMounted(() => {
   getAuth().onAuthStateChanged((user) => {
     if (user) {
       store
-        .getData(store.COL.USERS, uid.value)
+        .getData(store.COL.USERS, user.uid)
         .catch((error) => {
           console.log(error)
         })
@@ -80,7 +78,9 @@ onMounted(() => {
             return
           }
           const user = userSnap.data()
-          console.log(user)
+          if (!user || !user.bookIds) {
+            return
+          }
           user.bookIds.forEach((bookId: string) => {
             store
               .getData(store.COL.BOOKS, bookId)

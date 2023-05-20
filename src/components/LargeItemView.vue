@@ -38,7 +38,7 @@
               <img
                 :src="b.data().thumbnail"
                 class="card-img-top rounded"
-                style="height: 120px; object-fit: cover"
+                style="height: 160px; object-fit: cover"
                 alt="..."
               />
             </template>
