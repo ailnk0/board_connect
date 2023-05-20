@@ -33,7 +33,12 @@
         <a class="link-dark text-decoration-none" :href="`/detail/${b.id}`">
           <MiniItemVue>
             <template #thumb>
-              <img :src="b.data()?.thumbnail" class="card-img-top rounded" alt="..." />
+              <img
+                :src="b.data()?.thumbnail"
+                class="card-img-top rounded"
+                style="height: 120px; object-fit: cover"
+                alt="..."
+              />
             </template>
             <template #title>
               {{ b.data()?.title }}
