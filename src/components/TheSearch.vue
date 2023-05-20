@@ -1,8 +1,14 @@
 <template>
-  <div>
-    <form class="d-flex my-3" role="search">
-      <input class="form-control p-2" type="search" placeholder="검색" aria-label="Search" />
-    </form>
+  <div class="input-group">
+    <input
+      type="email"
+      class="form-control"
+      id="floatingInput"
+      placeholder="좋아하는 작품을 찾아보세요"
+    />
+    <button type="button" class="btn btn-outline-secondary">
+      <i class="fas fa-search"></i>
+    </button>
   </div>
 </template>
 

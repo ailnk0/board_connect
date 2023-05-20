@@ -2,10 +2,10 @@
   <div>
     <slot name="thumb" />
     <div class="py-2">
-      <span>애쓰지 않아도</span>
+      <span>킹도미노</span>
       <p class="fw-bold">
         <font-awesome-icon :icon="['fas', 'star']" style="color: #ffd700" />
-        <span> 3.0</span>
+        <span> 4.2</span>
       </p>
     </div>
   </div>

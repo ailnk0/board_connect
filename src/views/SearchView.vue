@@ -6,24 +6,21 @@
       </template>
       <template #title>검색</template>
       <template #btn_end>
-        <a class="nav-link" role="button" href="/help">설정</a>
+        <a class="nav-link" role="button" href="/detail">설정</a>
       </template>
     </TheTitle>
     <div class="py-5">
-      <div class="row">
-        <div class="col-md-8 offset-md-2">
-          <form action="#" method="get">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="검색" name="q" />
-            </div>
-          </form>
-        </div>
-      </div>
+      <TheSearch />
+    </div>
+    <div>
+      <LargeItemView />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import LargeItemView from '@/components/LargeItemView.vue'
+import TheSearch from '@/components/TheSearch.vue'
 import TheTitle from '../components/TheTitle.vue'
 </script>
 
