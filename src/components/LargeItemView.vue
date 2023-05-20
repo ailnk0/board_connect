@@ -31,14 +31,20 @@
       </div>
     </div>
     <div class="row row-cols-3 g-3">
-      <div class="col" v-for="i in items" :key="i">
-        <LargeItemVue>
-          <template #thumb>
-            <a href="/detail">
-              <img :src="getPhotoURL(i)" class="card-img-top rounded" alt="..." />
-            </a>
-          </template>
-        </LargeItemVue>
+      <div class="col" v-for="(b, i) in books" :key="i">
+        <a class="link-dark text-decoration-none" :href="`/detail/${b.id}`">
+          <LargeItemVue>
+            <template #thumb>
+              <img :src="b.data().thumbnail" class="card-img-top rounded" alt="..." />
+            </template>
+            <template #title>
+              {{ b.data().title }}
+            </template>
+            <template #rating>
+              {{ getRating(b.data().ratings) }}
+            </template>
+          </LargeItemVue>
+        </a>
       </div>
     </div>
   </div>
@@ -46,10 +52,37 @@
 
 <script setup lang="ts">
 import LargeItemVue from '@/components/LargeItem.vue'
+import { useStore } from '@/stores/authStore'
+import type { QuerySnapshot } from 'firebase/firestore'
+import { onMounted, ref } from 'vue'
 
-const items = [0, 1, 2, 3, 4]
-function getPhotoURL(index: number) {
-  return 'https://picsum.photos/150/200?random=' + index.toString()
+const store = useStore()
+const books = ref()
+
+onMounted(() => {
+  store
+    .getDatas(store.COL.BOOKS)
+    .catch((error) => {
+      console.log(error)
+    })
+    .then((querySnapshot) => {
+      books.value = (querySnapshot as QuerySnapshot)?.docs
+    })
+})
+
+function getRating(ratings: number[]) {
+  if (!ratings) {
+    return ' 평가 없음'
+  } else {
+    let total = 0.0
+    let count = 0
+    for (let i = 0; i < ratings.length; i++) {
+      if (ratings[i] === 0) continue
+      count += ratings[i]
+      total += ratings[i] * i
+    }
+    return (total / count++).toFixed(2)
+  }
 }
 </script>
 

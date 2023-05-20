@@ -1,54 +1,61 @@
 <template>
-  <TheTitle>
-    <template #btn_start>
-      <button class="btn btn-lg border-0" role="button" @click="$router.go(-1)">취소</button>
-    </template>
-    <template #title>리뷰 작성</template>
-    <template #btn_end>
-      <button class="btn btn-lg border-0" role="button" @click="submitPost" :disabled="noSubmit()">
-        확인
-      </button>
-    </template>
-  </TheTitle>
-  <div class="mt-5">
-    <div class="row">
-      <div class="col d-flex justify-content-center">
-        <div class="form-group">
-          <div class="rating">
-            <input v-model="rating" type="radio" name="star" id="star5" value="5.0" checked />
-            <label for="star5">
-              <font-awesome-icon :icon="['fas', 'star']" />
-            </label>
-            <input v-model="rating" type="radio" name="star" id="star4" value="4.0" />
-            <label for="star4">
-              <font-awesome-icon :icon="['fas', 'star']" />
-            </label>
-            <input v-model="rating" type="radio" name="star" id="star3" value="3.0" />
-            <label for="star3">
-              <font-awesome-icon :icon="['fas', 'star']" />
-            </label>
-            <input v-model="rating" type="radio" name="star" id="star2" value="2.0" />
-            <label for="star2">
-              <font-awesome-icon :icon="['fas', 'star']" />
-            </label>
-            <input v-model="rating" type="radio" name="star" id="star1" value="1.0" />
-            <label for="star1">
-              <font-awesome-icon :icon="['fas', 'star']" />
-            </label>
+  <div class="container mt-3">
+    <TheTitle>
+      <template #btn_start>
+        <button class="btn btn-lg border-0" role="button" @click="$router.go(-1)">취소</button>
+      </template>
+      <template #title>리뷰 작성</template>
+      <template #btn_end>
+        <button
+          class="btn btn-lg border-0"
+          role="button"
+          @click="submitPost"
+          :disabled="noSubmit()"
+        >
+          확인
+        </button>
+      </template>
+    </TheTitle>
+    <div class="mt-5">
+      <div class="row">
+        <div class="col d-flex justify-content-center">
+          <div class="form-group">
+            <div class="rating">
+              <input v-model="rating" type="radio" name="star" id="star5" value="10.0" checked />
+              <label for="star5">
+                <font-awesome-icon :icon="['fas', 'star']" />
+              </label>
+              <input v-model="rating" type="radio" name="star" id="star4" value="8.0" />
+              <label for="star4">
+                <font-awesome-icon :icon="['fas', 'star']" />
+              </label>
+              <input v-model="rating" type="radio" name="star" id="star3" value="6.0" />
+              <label for="star3">
+                <font-awesome-icon :icon="['fas', 'star']" />
+              </label>
+              <input v-model="rating" type="radio" name="star" id="star2" value="4.0" />
+              <label for="star2">
+                <font-awesome-icon :icon="['fas', 'star']" />
+              </label>
+              <input v-model="rating" type="radio" name="star" id="star1" value="2.0" />
+              <label for="star1">
+                <font-awesome-icon :icon="['fas', 'star']" />
+              </label>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-4">
-      <div class="col">
-        <div class="form-group">
-          <textarea
-            class="form-control border-0 shadow-none my-4"
-            style="height: 50vh"
-            id="postContent"
-            placeholder="감상을 자유롭게 표현해주세요"
-            v-model="postContent"
-          ></textarea>
+      <div class="row mt-4">
+        <div class="col">
+          <div class="form-group">
+            <textarea
+              class="form-control border-0 shadow-none my-4"
+              style="height: 50vh"
+              id="postContent"
+              placeholder="감상을 자유롭게 표현해주세요"
+              v-model="postContent"
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -60,13 +67,16 @@ import { ref } from 'vue'
 import { useStore } from '@/stores/authStore'
 import router from '@/router'
 import TheTitle from '../components/TheTitle.vue'
+import { useRoute } from 'vue-router'
 
-const rating = ref('5.0')
+const route = useRoute()
+const rating = ref('10.0')
 const postContent = ref('')
 const store = useStore()
 
 function submitPost() {
-  const data = {
+  const postData = {
+    book_id: route.params.id,
     rating: rating.value,
     content: postContent.value,
     image: '',
@@ -78,14 +88,32 @@ function submitPost() {
     like: 0,
     num_comment: 0
   }
-
   store
-    .addData(store.COL.POSTS, data)
+    .addData(store.COL.POSTS, postData)
     .catch((err) => {
       console.log(err)
     })
     .then(() => {
-      router.push('/')
+      store
+        .getData(store.COL.BOOKS, route.params.id as string)
+        .catch((err) => {
+          console.log(err)
+        })
+        .then((docSnap) => {
+          if (docSnap && docSnap.exists()) {
+            const data = docSnap.data()
+            const ratings = data.ratings
+            ratings[parseInt(rating.value)] += 1
+            store
+              .setData(store.COL.BOOKS, route.params.id as string, { ratings: ratings })
+              .catch((err) => {
+                console.log(err)
+              })
+              .then(() => {
+                router.push('/')
+              })
+          }
+        })
     })
 }
 

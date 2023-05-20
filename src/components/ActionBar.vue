@@ -89,7 +89,7 @@
                 <span> 알림</span>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a
                 class="nav-link"
                 role="button"
@@ -99,7 +99,7 @@
                 <i class="bi bi-pencil"></i>
                 <span> 글 작성</span>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a
                 class="nav-link"

@@ -1,9 +1,7 @@
 <template>
   <body>
     <ActionBar />
-    <div class="container mt-3">
-      <RouterView />
-    </div>
+    <RouterView />
   </body>
 </template>
 

@@ -41,7 +41,7 @@ const router = createRouter({
       component: () => import('../views/EditProfileView.vue')
     },
     {
-      path: '/write-post',
+      path: '/write-post/:id',
       name: 'write-post',
       component: () => import('../views/WritePostView.vue')
     },
@@ -61,7 +61,7 @@ const router = createRouter({
       component: () => import('../views/HeartView.vue')
     },
     {
-      path: '/detail/',
+      path: '/detail/:id',
       name: 'detail',
       component: () => import('../views/DetailView.vue')
     }

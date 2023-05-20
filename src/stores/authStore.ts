@@ -12,7 +12,17 @@ import {
   sendEmailVerification
 } from 'firebase/auth'
 import * as firebaseui from 'firebaseui'
-import { getFirestore, collection, addDoc, getDocs, setDoc, doc, getDoc } from 'firebase/firestore'
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  setDoc,
+  doc,
+  getDoc,
+  query,
+  QueryConstraint
+} from 'firebase/firestore'
 import router from '@/router'
 import * as fs from 'firebase/storage'
 
@@ -20,7 +30,8 @@ export const useStore = defineStore('store', () => {
   const SESSION_KEY = 'UID'
   const COL = {
     USERS: 'users',
-    POSTS: 'posts'
+    POSTS: 'posts',
+    BOOKS: 'books'
   }
 
   const isLogin: Ref<boolean> = ref(hasSession())
@@ -222,6 +233,13 @@ export const useStore = defineStore('store', () => {
     return querySnapshot
   }
 
+  async function querayDatas(collectionName: string, param: QueryConstraint) {
+    const db = getFirestore(firebaseApp)
+    const q = query(collection(db, collectionName), param)
+    const querySnapshot = await getDocs(q)
+    return querySnapshot
+  }
+
   async function setData(collectionName: string, docName: string, data: object) {
     const db = getFirestore(firebaseApp)
     const docRef = doc(db, collectionName, docName)
@@ -237,6 +255,7 @@ export const useStore = defineStore('store', () => {
   return {
     COL,
     isLogin,
+    uid,
     user,
     photoURL,
     photoChanged,
@@ -254,6 +273,9 @@ export const useStore = defineStore('store', () => {
     initAuthUI,
     logout,
     addData,
-    getDatas
+    getData,
+    setData,
+    getDatas,
+    querayDatas
   }
 })

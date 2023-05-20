@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-3">
     <TheTitle>
       <template #btn_start>
         <a class="nav-link" role="button" @click="$router.go(-1)">뒤로</a>
@@ -33,28 +33,7 @@
       </div>
     </div>
     <div>
-      <div>
-        <div class="row row-cols-3 text-center">
-          <div class="col pb-2 border-bottom border-2 border-dark">
-            <a class="link-dark text-decoration-none" aria-current="page" href="#">
-              <span>보드게임</span>
-            </a>
-          </div>
-          <div class="col pb-2">
-            <a class="link-secondary text-decoration-none" href="#">
-              <span>책</span>
-            </a>
-          </div>
-          <div class="col pb-2">
-            <a class="link-secondary text-decoration-none" href="#">
-              <span>영화</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div>
-        <MiniItemViewVue />
-      </div>
+      <MiniItemViewVue />
     </div>
   </div>
 </template>

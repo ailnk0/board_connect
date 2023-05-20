@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-3">
     <TheTitle>
       <template #btn_start>
         <a class="nav-link" role="button" @click="$router.go(-1)">뒤로</a>

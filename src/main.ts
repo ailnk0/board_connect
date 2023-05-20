@@ -37,4 +37,6 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(createPinia())
 app.use(router)
 
-app.mount('#app')
+router.isReady().then(() => {
+  app.mount('#app')
+})
