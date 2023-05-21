@@ -62,7 +62,12 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" role="button" data-bs-dismiss="offcanvas" href="/">
+              <a
+                class="nav-link"
+                role="button"
+                data-bs-dismiss="offcanvas"
+                @click="router.push('/')"
+              >
                 <i class="bi bi-house"></i>
                 <span> 홈</span>
               </a>
