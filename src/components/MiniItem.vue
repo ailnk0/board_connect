@@ -5,11 +5,13 @@
       <span>
         <slot name="title" />
       </span>
-      <p class="fw-bold">
-        <font-awesome-icon :icon="['fas', 'star']" style="color: #ffd700" />
-        <span>
-          <slot name="rating" />
-        </span>
+      <p>
+        <small>
+          <font-awesome-icon :icon="['fas', 'star']" style="color: #ffd700" />
+          <span>
+            <slot name="rating" />
+          </span>
+        </small>
       </p>
     </div>
   </div>
