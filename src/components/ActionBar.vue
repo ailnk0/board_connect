@@ -9,6 +9,11 @@
         </button>
       </div>
       <div>
+        <button class="btn border-0" type="button" @click="$router.push('/jarvis')">
+          <span class="fs-5">
+            <i class="bi bi-chat-quote"></i>
+          </span>
+        </button>
         <button class="btn border-0" type="button" @click="$router.push('/search')">
           <span class="fs-5">
             <i class="bi bi-search"></i>

@@ -66,6 +66,11 @@ const router = createRouter({
       component: () => import('../views/DetailView.vue')
     },
     {
+      path: '/jarvis',
+      name: 'jarvis',
+      component: () => import('../views/JarvisView.vue')
+    },
+    {
       path: '/manage-book',
       name: 'manage-book',
       component: () => import('../views/ManageBookView.vue')
