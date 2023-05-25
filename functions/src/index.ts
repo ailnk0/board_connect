@@ -7,13 +7,33 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-import functions = require('firebase-functions')
-import * as logger from 'firebase-functions/logger'
+// The Cloud Functions for Firebase SDK to create Cloud Functions and triggers.
+import * as functions from 'firebase-functions'
+import { logger } from 'firebase-functions'
+import { Configuration, OpenAIApi } from 'openai'
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+// const functions = require('firebase-functions')
+// const { logger } = require('firebase-functions')
+// const { Configuration, OpenAIApi } = require('openai')
 
-exports.helloWorld = functions.region('asia-northeast3').https.onRequest((request, response) => {
-  logger.info('Hello logs!', { structuredData: true })
-  response.send('Hello from Firebase!')
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY
 })
+const openai = new OpenAIApi(configuration)
+
+exports.helloWorld = functions
+  .region('asia-northeast1')
+  .https.onRequest(async (req: functions.https.Request, res: functions.Response<any>) => {
+    logger.info('Hello logs!', { structuredData: true })
+    res.send('Hello from Firebase!')
+  })
+
+exports.callGpt = functions
+  .region('asia-northeast1')
+  .https.onRequest(async (req: functions.https.Request, res: functions.Response<any>) => {
+    const completion = await openai.createCompletion({
+      model: 'text-davinci-003',
+      prompt: 'Hello world'
+    })
+    res.send(completion.data.choices[0].text)
+  })
