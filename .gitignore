@@ -30,4 +30,7 @@ coverage
 test-results/
 playwright-report/
 
+# Firebase
 .firebase
+functions/lib/**/*.js
+functions/lib/**/*.js.map
