@@ -44,18 +44,17 @@ app.get('/', (_req, _res) => {
   _res.send(`Hello from Firebase!`)
 })
 
-app.get('/jarvis-board', async (_req, _res) => {
+app.post('/jarvis-board', async (_req, _res) => {
+  const message = _req.body.message
+
   const completion = await openAi.createChatCompletion({
     model: 'gpt-3.5-turbo',
     messages: [
       { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: 'Who won the world series in 2020?' },
-      { role: 'assistant', content: 'The Los Angeles Dodgers won the World Series in 2020.' },
-      { role: 'user', content: 'Where was it played?' }
+      { role: 'user', content: message }
     ]
   })
-  logger.info('Completion data', completion.data)
-  _res.send(completion.data.choices[0].message)
+  _res.json(completion.data.choices[0].message)
 })
 
 app.post('/test', upload.none(), () => {})
