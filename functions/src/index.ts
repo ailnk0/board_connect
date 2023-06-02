@@ -10,45 +10,42 @@
 // The Cloud Functions for Firebase SDK to create Cloud Functions and triggers.
 import * as functions from 'firebase-functions'
 import { logger } from 'firebase-functions'
-import { Configuration, OpenAIApi } from 'openai'
 
-// const functions = require('firebase-functions')
-// const { logger } = require('firebase-functions')
-// const { Configuration, OpenAIApi } = require('openai')
+// The Firebase Admin SDK to access Firestore.
+import * as admin from 'firebase-admin'
+admin.initializeApp()
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY
+// Web framework
+import * as express from 'express'
+
+// OpenAI
+import * as openai from 'openai'
+
+const app = express()
+
+const openAi = new openai.OpenAIApi(
+  new openai.Configuration({
+    apiKey: process.env.OPENAI_API_KEY
+  })
+)
+
+app.get('/', (_req, _res) => {
+  logger.info('Hello logs!', { structuredData: true })
+  _res.send(`Hello from Firebase!`)
 })
-const openAi = new OpenAIApi(configuration)
 
-exports.helloWorld = functions
-  .region('asia-northeast1')
-  .https.onRequest(async (req: functions.https.Request, res: functions.Response<any>) => {
-    logger.info('Hello logs!', { structuredData: true })
-    res.send('Hello from Firebase!')
+app.get('/jarvis-board', async (_req, _res) => {
+  const completion = await openAi.createChatCompletion({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'user', content: 'Who won the world series in 2020?' },
+      { role: 'assistant', content: 'The Los Angeles Dodgers won the World Series in 2020.' },
+      { role: 'user', content: 'Where was it played?' }
+    ]
   })
+  logger.info('Completion data', completion.data)
+  _res.send(completion.data.choices[0].message)
+})
 
-exports.callGpt = functions
-  .region('asia-northeast1')
-  .https.onRequest(async (req: functions.https.Request, res: functions.Response<any>) => {
-    const completion = await openAi.createCompletion({
-      model: 'text-davinci-003',
-      prompt: 'Hello world'
-    })
-    res.send(completion.data.choices[0].text)
-  })
-
-exports.callChatGpt = functions
-  .region('asia-northeast1')
-  .https.onRequest(async (req: functions.https.Request, res: functions.Response<any>) => {
-    const completion = await openAi.createChatCompletion({
-      model: 'gpt-3.5-turbo',
-      messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content: 'Who won the world series in 2020?' },
-        { role: 'assistant', content: 'The Los Angeles Dodgers won the World Series in 2020.' },
-        { role: 'user', content: 'Where was it played?' }
-      ]
-    })
-    res.send(completion.data.choices[0].message)
-  })
+exports.app = functions.region('asia-northeast3').https.onRequest(app)
