@@ -18,10 +18,14 @@ admin.initializeApp()
 // Web framework
 import * as express from 'express'
 
+// Middleware
+import * as cors from 'cors'
+
 // OpenAI
 import * as openai from 'openai'
 
 const app = express()
+app.use(cors({ origin: true }))
 
 const openAi = new openai.OpenAIApi(
   new openai.Configuration({
