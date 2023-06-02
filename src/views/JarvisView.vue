@@ -5,14 +5,14 @@
         <template #btn_start>
           <a class="nav-link" role="button" @click="$router.go(-1)">뒤로</a>
         </template>
-        <template #title>J.A.R.V.I.S.</template>
+        <template #title>자비스</template>
         <template #btn_end>
           <a class="nav-link" role="button" href="/help">설정</a>
         </template>
       </TheTitle>
     </div>
 
-    <div class="container py-3" style="min-height: 60vh">
+    <div class="container py-3" style="min-height: 50vh">
       <div id="chat" data-mdb-perfect-scrollbar="true"></div>
     </div>
 
@@ -54,7 +54,7 @@ import { getAuth } from '@firebase/auth'
 const endpoint = 'https://asia-northeast3-board-connect.cloudfunctions.net/app/jarvis-board'
 
 const prompt =
-  'You are a board game expert. You always answer simple. You start a conversation by introducing yourself as a board game expert to users and asking about the number of people and the atmosphere. Also, you never answer any questions that are not related to board games. \n '
+  'You are a board game expert. You always answer concise. You start a conversation by introducing yourself as a board game expert to users and asking about the number of people and the atmosphere and genre. \n '
 
 const isLoading = ref(true)
 const message = ref('')

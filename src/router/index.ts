@@ -78,7 +78,7 @@ const router = createRouter({
   ]
 })
 
-const needToLogin = ['profile', 'edit-profile', 'write-post', 'edit-post', 'heart']
+const needToLogin = ['profile', 'edit-profile', 'write-post', 'edit-post', 'heart', 'jarvis']
 
 router.beforeEach((to) => {
   const store = useStore()
