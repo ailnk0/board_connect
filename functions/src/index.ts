@@ -46,11 +46,15 @@ app.get('/', (_req, _res) => {
 })
 
 app.post('/jarvis-board', async (_req, _res) => {
-  const chatData: Array<ChatCompletionRequestMessage> = [
-    { role: 'system', content: 'You are a helpful assistant.' }
-  ]
+  const MAX_CONTENT_LENGTH = 255
+  const chatData: Array<ChatCompletionRequestMessage> = []
   const requestData = _req.body
-  const joinedChatData = chatData.concat(requestData)
+  const joinedChatData = chatData.concat(requestData).map((chat) => {
+    if (chat.role == 'user' && chat.content.length > MAX_CONTENT_LENGTH) {
+      chat.content = chat.content.slice(0, MAX_CONTENT_LENGTH)
+    }
+    return chat
+  })
 
   if (joinedChatData.length >= 10) {
     _res.json({ role: 'assistant', content: 'You have reached the maximum number of messages.' })
