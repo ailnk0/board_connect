@@ -20,12 +20,18 @@ import * as express from 'express'
 
 // Middleware
 import * as cors from 'cors'
+import * as bodyParser from 'body-parser'
+import * as multer from 'multer'
 
 // OpenAI
 import * as openai from 'openai'
 
+const upload = multer() // for parsing multipart/form-data
 const app = express()
+
 app.use(cors({ origin: true }))
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 const openAi = new openai.OpenAIApi(
   new openai.Configuration({
@@ -51,5 +57,7 @@ app.get('/jarvis-board', async (_req, _res) => {
   logger.info('Completion data', completion.data)
   _res.send(completion.data.choices[0].message)
 })
+
+app.post('/test', upload.none(), () => {})
 
 exports.app = functions.region('asia-northeast3').https.onRequest(app)
