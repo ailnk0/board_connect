@@ -12,15 +12,19 @@
       </TheTitle>
     </div>
 
-    <div class="container py-3" style="min-height: 80vh">
+    <div class="container py-3" style="min-height: 60vh">
       <div id="chat" data-mdb-perfect-scrollbar="true"></div>
+    </div>
+
+    <div class="d-flex justify-content-center my-3">
+      <i class="fas fa-spinner" v-if="isLoading"></i>
     </div>
 
     <div
       class="bg-light text-muted d-flex justify-content-start align-items-center p-2 sticky-bottom"
     >
       <img
-        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
         alt="avatar 3"
         style="width: 40px; height: 100%"
       />
@@ -47,11 +51,13 @@ import { useStore } from '@/stores/authStore'
 import { useCounterStore } from '@/stores/counter'
 import { getAuth } from '@firebase/auth'
 
-const endpoint = 'https://asia-northeast3-board-connect.cloudfunctions.net/app/jarvis-board'
+//const endpoint = 'https://asia-northeast3-board-connect.cloudfunctions.net/app/jarvis-board'
+const endpoint = 'http://127.0.0.1:5001/board-connect/asia-northeast3/app/jarvis-board'
 
 const prompt =
   'You are a board game expert. You always answer simple. You start a conversation by introducing yourself as a board game expert to users and asking about the number of people and the atmosphere. Also, you never answer any questions that are not related to board games. \n '
 
+const isLoading = ref(true)
 const message = ref('')
 const chatData: Ref<{}[]> = ref([])
 
@@ -118,6 +124,7 @@ async function initMessage() {
   }
 
   message.value = ''
+  isLoading.value = false
 }
 
 async function postMessage() {
@@ -125,6 +132,8 @@ async function postMessage() {
 
   appendMessage(message.value)
   chatData.value.push({ role: 'user', content: message.value })
+
+  isLoading.value = true
 
   try {
     const response = await axios.post(endpoint, chatData.value)
@@ -134,6 +143,7 @@ async function postMessage() {
     console.error(error)
   }
 
+  isLoading.value = false
   console.log(chatData.value)
   message.value = ''
 }
@@ -173,4 +183,17 @@ async function appendResponse(msg: string) {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
