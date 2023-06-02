@@ -25,6 +25,7 @@ import * as multer from 'multer'
 
 // OpenAI
 import * as openai from 'openai'
+import { ChatCompletionRequestMessage } from 'openai'
 
 const upload = multer() // for parsing multipart/form-data
 const app = express()
@@ -45,14 +46,20 @@ app.get('/', (_req, _res) => {
 })
 
 app.post('/jarvis-board', async (_req, _res) => {
-  const message = _req.body.message
+  const chatData: Array<ChatCompletionRequestMessage> = [
+    { role: 'system', content: 'You are a helpful assistant.' }
+  ]
+  const requestData = _req.body
+  const joinedChatData = chatData.concat(requestData)
+
+  if (joinedChatData.length >= 10) {
+    _res.json({ role: 'assistant', content: 'You have reached the maximum number of messages.' })
+    return
+  }
 
   const completion = await openAi.createChatCompletion({
     model: 'gpt-3.5-turbo',
-    messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
-      { role: 'user', content: message }
-    ]
+    messages: joinedChatData
   })
   _res.json(completion.data.choices[0].message)
 })

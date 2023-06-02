@@ -12,7 +12,7 @@
       </TheTitle>
     </div>
 
-    <div class="container py-3" style="height: 80vh">
+    <div class="container py-3" style="min-height: 80vh">
       <div id="chat" data-mdb-perfect-scrollbar="true"></div>
     </div>
 
@@ -41,46 +41,33 @@
 <script setup lang="ts">
 import TheTitle from '@/components/TheTitle.vue'
 import axios from 'axios'
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 const endpoint = 'https://asia-northeast3-board-connect.cloudfunctions.net/app/jarvis-board'
 
 const message = ref('')
+const chatData: Ref<{}[]> = ref([])
 
 async function postMessage() {
   if (!message.value) return
 
   appendMessage(message.value)
+  chatData.value.push({ role: 'user', content: message.value })
 
   try {
-    const response = await axios.post(endpoint, { message: message.value })
+    const response = await axios.post(endpoint, chatData.value)
     console.log(response.data)
     appendResponse(response.data.content)
-    // Handle success
+    chatData.value.push({ role: 'assistant', content: response.data.content })
   } catch (error) {
     console.error(error)
-    // Handle error
   }
+
+  console.log(chatData.value)
+  message.value = ''
 }
 
 async function appendMessage(msg: string) {
-  const messageElem = document.createElement('div')
-  messageElem.innerHTML = `
-    <div class="d-flex flex-row justify-content-start">
-      <img
-        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-        alt="avatar 1"
-        style="width: 45px; height: 100%"
-      />
-      <div>
-        <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7">${msg}</p>
-        <p class="small ms-3 mb-3 rounded-3 text-muted">23:58</p>
-      </div>
-    </div>`
-  document.getElementById('chat')?.appendChild(messageElem)
-}
-
-async function appendResponse(msg: string) {
   const messageElem = document.createElement('div')
   messageElem.innerHTML = `
     <div class="d-flex flex-row justify-content-end mb-4 pt-1">
@@ -93,6 +80,23 @@ async function appendResponse(msg: string) {
         alt="avatar 1"
         style="width: 45px; height: 100%"
       />
+    </div>`
+  document.getElementById('chat')?.appendChild(messageElem)
+}
+
+async function appendResponse(msg: string) {
+  const messageElem = document.createElement('div')
+  messageElem.innerHTML = `
+    <div class="d-flex flex-row justify-content-start">
+      <img
+        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+        alt="avatar 1"
+        style="width: 45px; height: 100%"
+      />
+      <div>
+        <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7">${msg}</p>
+        <p class="small ms-3 mb-3 rounded-3 text-muted">23:58</p>
+      </div>
     </div>`
   document.getElementById('chat')?.appendChild(messageElem)
 }
