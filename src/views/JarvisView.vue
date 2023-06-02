@@ -51,8 +51,7 @@ import { useStore } from '@/stores/authStore'
 import { useCounterStore } from '@/stores/counter'
 import { getAuth } from '@firebase/auth'
 
-//const endpoint = 'https://asia-northeast3-board-connect.cloudfunctions.net/app/jarvis-board'
-const endpoint = 'http://127.0.0.1:5001/board-connect/asia-northeast3/app/jarvis-board'
+const endpoint = 'https://asia-northeast3-board-connect.cloudfunctions.net/app/jarvis-board'
 
 const prompt =
   'You are a board game expert. You always answer simple. You start a conversation by introducing yourself as a board game expert to users and asking about the number of people and the atmosphere. Also, you never answer any questions that are not related to board games. \n '
@@ -113,8 +112,6 @@ async function initMessage() {
     //+ myRatings.value.join(', ')
   })
 
-  console.log(chatData.value)
-
   try {
     const response = await axios.post(endpoint, chatData.value)
     appendResponse(response.data.content)
@@ -144,7 +141,6 @@ async function postMessage() {
   }
 
   isLoading.value = false
-  console.log(chatData.value)
   message.value = ''
 }
 
