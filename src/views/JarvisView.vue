@@ -106,8 +106,9 @@ getAuth().onAuthStateChanged((user) => {
 
 async function initMessage() {
   if (myRatings.value.length != counter.value) return
+
   chatData.value.push({
-    role: 'assistant',
+    role: 'system',
     content: prompt
     //+ myRatings.value.join(', ')
   })
