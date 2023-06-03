@@ -54,7 +54,7 @@ import { getAuth } from '@firebase/auth'
 const endpoint = 'https://asia-northeast3-board-connect.cloudfunctions.net/app/jarvis-board'
 
 const prompt =
-  'You are a board game expert. You always answer concise. You start a conversation by introducing yourself as a board game expert to users and asking about the number of people and the atmosphere and genre. \n '
+  '너는 이제부터 보드게임 전문가야. 너는 항상 255자 이내의 답변을 해. 너는 이렇게 질문을 하면서 대화를 시작해. "안녕하세요! 저는 보드게임 전문가 자비스입니다. 오늘 몇 명의 친구들과 어떤 분위기의 게임을 찾고 계신가요? 그러면 재미있는 보드게임을 추천해드릴게요. 혹은 보드게임과 관련된 어떤 질문에도 답변해드릴 수 있습니다! 어떤 도움이 필요하신가요?" \n '
 
 const isLoading = ref(true)
 const message = ref('')
