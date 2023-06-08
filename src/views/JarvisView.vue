@@ -53,8 +53,14 @@ import { getAuth } from '@firebase/auth'
 
 const endpoint = 'https://asia-northeast3-board-connect.cloudfunctions.net/app/jarvis-board'
 
-const prompt =
-  '너는 이제부터 보드게임 전문가야. 너는 항상 255자 이내의 답변을 해. 너는 이렇게 질문을 하면서 대화를 시작해. "안녕하세요! 저는 보드게임 전문가 자비스입니다. 오늘 몇 명의 친구들과 어떤 분위기의 게임을 찾고 계신가요? 그러면 재미있는 보드게임을 추천해드릴게요. 혹은 보드게임과 관련된 어떤 질문에도 답변해드릴 수 있습니다! 어떤 도움이 필요하신가요?" \n '
+const prompt_system =
+  'You are a board game expert. You give a short answer within 255 characters. You recommend three board games, answer including the name of the board game, the number of recommended people, the time required, and a brief introduction.'
+const prompt_assistant =
+  'hello! I am Jarvis, a board game expert. How many friends and what atmosphere do you want to enjoy board games with today? Then, I will recommend you a fun board game. Or, we can answer any questions related to board games! What help do you need?'
+const prompt_assistant_ko =
+  '안녕하세요! 저는 보드게임 전문가 자비스입니다. 오늘 몇 명의 친구들과 어떤 분위기의 게임을 찾고 계신가요? 그러면 재미있는 보드게임을 추천해드릴게요. 혹은 보드게임과 관련된 어떤 질문에도 답변해드릴 수 있습니다! 어떤 도움이 필요하신가요?'
+const prompt_user =
+  'This list is the names and ratings of board games I have played. Rating is out of 10. \n'
 
 const isLoading = ref(true)
 const message = ref('')
@@ -109,17 +115,20 @@ async function initMessage() {
 
   chatData.value.push({
     role: 'system',
-    content: prompt
-    //+ myRatings.value.join(', ')
+    content: prompt_system
+  })
+  chatData.value.push({
+    role: 'assistant',
+    content: prompt_assistant
+  })
+  chatData.value.push({
+    role: 'user',
+    content: prompt_user + myRatings.value.join(', ')
   })
 
-  try {
-    const response = await axios.post(endpoint, chatData.value)
-    appendResponse(response.data.content)
-    chatData.value.push({ role: 'assistant', content: response.data.content })
-  } catch (error) {
-    console.error(error)
-  }
+  console.log(chatData)
+
+  appendResponse(prompt_assistant_ko)
 
   message.value = ''
   isLoading.value = false
